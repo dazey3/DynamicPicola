@@ -68,6 +68,7 @@
                                         <h:panelGroup id ="test" >
                                             <h:form id="centerGroupForm" rendered="#{groupSelectedBean.groupShow}">
                                                 <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                                
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
                                                 <h:panelGrid columns="#{groupSelectedBean.selection.size()}">
                                                     <ui:repeat value ="#{groupSelectedBean.selection}" var ="user">
@@ -107,13 +108,11 @@
                                             </h:form>
                                             <h:form id="updateAssignmentForm" rendered="#{groupSelectedBean.assignmentShow}">
                                                 <p:messages id="successMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                                <h:outputText style="font-weight:bold; font-size: 20px;" value="Assignment #{groupSelectedBean.assignment_id}:"/>
                                                 <h:panelGrid columns="1">
-                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Assignment #{groupSelectedBean.assignment_id}:"/>
-                                                    <p:commandButton value="Make Groups" actionListener="#{groupSelectedBean.createGroups}"/>
+                                                     <h:outputText style="font-weight:bold;" value="Assignment Name:"/>
+                                                    <h:inputText value="#{groupSelectedBean.assignment_name}"/>
                                                 </h:panelGrid>
-                                                <h:inputText>
-                                                    
-                                                </h:inputText>
                                                 <h:panelGrid columns="3">
                                                     <h:panelGroup>
                                                         <h:outputText style="font-weight:bold;" value="Assignment Date:"/>
@@ -217,7 +216,10 @@
                                                         </p:tab>
                                                     </p:tabView>
                                                 </h:panelGroup>
-                                                <p:commandButton type="submit" update=":tabABCD:updateAssignmentForm" value="Save Changes" actionListener="#{groupSelectedBean.updateAssignment}"/>  
+                                                <h:panelGrid columns="3">
+                                                    <p:commandButton type="submit" update=":tabABCD:updateAssignmentForm" value="Save Changes" actionListener="#{groupSelectedBean.updateAssignment}"/>
+                                                    <p:commandButton value="Create Groups" actionListener="#{groupSelectedBean.createGroups}"/>
+                                                </h:panelGrid>
                                             </h:form>
                                         </h:panelGroup>
                                     </p:layoutUnit>
@@ -397,33 +399,6 @@
                                     </h:panelGroup>
                                     <p:commandButton type="submit" value="Create Assignment" actionListener="#{createAssignmentBean.processAction}"/>  
                                     <p:commandButton type="clear" value="Reset" actionListener="#{createAssignmentBean.clearForm}"/>
-                                </h:form>
-                            </p:tab>
-                            <p:tab id="profileTab" title="Profile">
-                                <h:form id ="profileForm">
-                                    <h:panelGrid columns="1">
-                                        <h:panelGrid columns="2">
-                                            <p:graphicImage value="images/redbutton.png" />
-                                            <h:panelGrid columns ="2">
-                                                <h:outputText value="Name: "/>
-                                                <h:outputText value="CONTENT"/>
-                                                <h:outputText value="Gender: "/>
-                                                <h:outputText value="CONTENT"/>
-                                                <h:outputText value="Description: "/>
-                                                <h:outputText value="CONTENT"/>
-                                                <h:outputText value="Birthday: "/>
-                                                <h:outputText value="CONTENT"/>
-                                                <h:outputText value="Last Login Date: "/>
-                                                <h:outputText value="CONTENT"/>
-                                            </h:panelGrid>
-                                        </h:panelGrid>
-                                        <h:panelGrid columns="1">
-                                            <h:outputText value="Most Recent Post: "/>
-                                            <h:outputText value="Groups: "/>
-                                        </h:panelGrid>
-                                    </h:panelGrid>
-
-
                                 </h:form>
                             </p:tab>
                         </p:tabView>

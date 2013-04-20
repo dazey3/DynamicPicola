@@ -170,8 +170,7 @@
                                             <h:form id="mpForm" rendered="#{portionBean.renderMP()}">
 
                                                 <h:outputText value ="MP Question: #{portionBean.question}"></h:outputText>
-
-
+                                                
                                                 <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
                                                 <h:panelGrid columns="#{portionBean.currentGroup.size()}">
@@ -195,7 +194,7 @@
                                                             <p:selectBooleanCheckbox disabled="true" value="#{post.summary_bit}"/>
                                                         </p:column>
                                                         <p:column headerText="Delete">
-                                                            <p:commandButton oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
+                                                            <p:commandButton disabled="#{post.user_id != loginBean.loggedInUserId}"  oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
                                                                 <f:setPropertyActionListener value="#{post}" target="#{portionBean.selectedPost}" />
                                                             </p:commandButton>
                                                         </p:column>
@@ -205,6 +204,10 @@
 
                                                 <h:panelGrid columns="1">
                                                     <h:outputText style="font-weight:bold; font-size: 20px;" value="Post Comment:"/>
+                                                    <h:panelGrid columns="2">
+                                                        <h:outputText value="Flag as Summary: "/>
+                                                        <p:selectBooleanCheckbox value="#{portionBean.summaryBit}"/>
+                                                    </h:panelGrid>
                                                     <p:inputTextarea rows="5" value="#{portionBean.studentPost}" cols="30" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                     <p:commandButton update=":tabABCD:mpForm" type="submit" value="Post" actionListener="#{portionBean.studentSubmitPost()}"/>
                                                 </h:panelGrid>
@@ -217,17 +220,46 @@
                                 <h:form id="rosterForm">
                                     <p:dataList value="#{studentAssignmentMenuBean.getUsers()}" var="student" id="students" paginator="true" rows="5" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" type="none">  
                                         <f:facet name="header">Students</f:facet>  
-                                        <h:outputText value="#{student.l_name}, #{student.f_name}" style="margin-left:10px" />  
-                                        <br />  
+
+                                        <p:commandLink value="#{student}" update=":tabABCD:profileDialog" actionListener="#{viewProfileBean.processAction}" style="margin-left:10px"  onclick="dlg.show();" />
+                                        <br/>  
                                     </p:dataList> 
                                 </h:form>
-
-                            </p:tab>
-
-                            <p:tab id="profile" title="My Profile">
-                                <h:form id="profileForm">
-                                    <!--- Needs to be ported in -->
-                                </h:form>
+                                <p:dialog id="dialog" header="Student Profile" widgetVar="dlg" showEffect="clip" hideEffect="clip" modal="true">
+                                    <h:form id ="profileDialog">
+                                        <h:panelGrid columns="1">
+                                            <h:panelGrid columns="2">
+                                                <h:graphicImage value="#{viewProfileBean.picLink}" />
+                                                <h:panelGrid columns ="2">
+                                                    <h:outputText style="font-weight:bold;" value="Name: "/>
+                                                    <h:outputText style="font-weight:bold;" value="#{viewProfileBean.FName}"/>
+                                                    <h:outputText value="Gender: "/>
+                                                    <h:outputText value="#{viewProfileBean.gender}"/>
+                                                    <h:outputText value="Description: "/>
+                                                    <h:outputText value="#{viewProfileBean.description}"/>
+                                                    <h:outputText value="Birthday: "/>
+                                                    <h:outputText value="#{viewProfileBean.b_day}"/>
+                                                    <h:outputText value="Last Login Date: "/>
+                                                    <h:outputText value="#{viewProfileBean.updateDate}"/>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="1">
+                                                <h:outputText value="Most Recent Post: "/>
+                                                <p:dataTable var="post" value="#{viewProfileBean.postActivity}">
+                                                    <p:column headerText="Time">  
+                                                        <h:outputText value="#{post.post_time}" />
+                                                    </p:column>
+                                                    <p:column headerText="Content">  
+                                                        <h:outputText value="#{post.post_text}" />
+                                                    </p:column>
+                                                    <p:column headerText="Summary">
+                                                        <h:outputText value="#{post.summary_bit}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </p:dialog>
 
                             </p:tab>
 
