@@ -94,7 +94,7 @@ public class AssignmentMenuBean implements Serializable {
                    System.out.println("Group: " + g);
                }
                tab.setAssignment(assignments.get(assignment_count));
-               tab.setTitle("Assignment "+ assignments.get(assignment_count).getAssignment_id());
+               tab.setTitle("Assignment "+ assignments.get(assignment_count).getAssignment_number());
                tab.setList(groups);
                menus.add(tab);
        }

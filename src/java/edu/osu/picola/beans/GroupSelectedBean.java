@@ -81,6 +81,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     private Date MP_start_date;
     private Date MP_end_date;
     private int assignment_id;
+    private String assignment_name;
     
     private String initquestion;
     private String answer_to_question_explanation;
@@ -97,6 +98,14 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     private String mpQuestionDesc;
     private Assignment selectedAssignment;
 
+    public String getAssignment_name() {
+        return assignment_name;
+    }
+
+    public void setAssignment_name(String assignment_name) {
+        this.assignment_name = assignment_name;
+    }
+    
     public int getAssignment_id() {
         return assignment_id;
     }

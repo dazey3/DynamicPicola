@@ -46,7 +46,16 @@ public class PortionBean implements Serializable, ActionListener {
     private Group currentGroup;
     private List<Post> currentGroupDiscussion;
     private Post selectedPost;
-    private String studentPost; 
+    private String studentPost;
+    private boolean summaryBit;
+
+    public boolean isSummaryBit() {
+        return summaryBit;
+    }
+
+    public void setSummaryBit(boolean summaryBit) {
+        this.summaryBit = summaryBit;
+    }
     
     public String getStudentPost() {
         return studentPost;
@@ -195,10 +204,11 @@ public class PortionBean implements Serializable, ActionListener {
             System.out.println("Group: " + this.currentGroup);
             System.out.println();
             
-            Post toSubmit = new Post(this.studentPost, new Timestamp(System.currentTimeMillis()), currentQuestion.isIs_mp_question(), currentQuestion.isIs_bp_question(), false, LoginBean.user.getUser_id(),this.currentGroup.getGroup_id());
+            Post toSubmit = new Post(this.studentPost, new Timestamp(System.currentTimeMillis()), currentQuestion.isIs_mp_question(), currentQuestion.isIs_bp_question(), summaryBit, LoginBean.user.getUser_id(),this.currentGroup.getGroup_id());
             PostDAO.insertPost(toSubmit);
             this.currentGroupDiscussion = PostDAO.getPostByGroupId(currentGroup.getGroup_id());
             this.studentPost = "";
+            this.summaryBit = false;
             return true;
         }
         return false;

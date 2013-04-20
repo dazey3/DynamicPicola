@@ -169,7 +169,9 @@ public class LoginBean implements Serializable{
         this.updateDate = updateDate;
     }
     
-    
+    public int getLoggedInUserId(){
+        return user.getUser_id();
+    }
     
     public void revertImagePath(ActionEvent ae){
         System.out.println("Reverting Image Path");
