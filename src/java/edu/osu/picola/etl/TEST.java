@@ -4,7 +4,9 @@
  */
 package edu.osu.picola.etl;
 
+import edu.osu.picola.dao.AssignmentDAO;
 import edu.osu.picola.dao.GroupDAO;
+import edu.osu.picola.dataobjects.Assignment;
 import edu.osu.picola.dataobjects.Group;
 import edu.osu.picola.dataobjects.User;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public class TEST {
     public static void main(String args[]) {
-        List<Group> group = GroupDAO.getAllGroupsAssignedAssignment(1);
+//        List<Group> group = GroupDAO.getAllGroupsAssignedAssignment(1);
 //        System.out.println("SIZE = "+ group.size() );
 //        
 //        for (Group g : group) {
@@ -24,8 +26,6 @@ public class TEST {
 //            }
 //            System.out.println("==============");
 //        }
-        boolean b=false;
-        int a=0;
-        System.out.println(a);
+
     }
 }

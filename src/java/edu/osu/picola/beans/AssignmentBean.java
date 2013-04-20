@@ -36,6 +36,15 @@ public class AssignmentBean {
     private int assignment_number;
     private Assignment assignment;
     private int assignment_id;
+
+    public String getAssignment_name() {
+        return assignment_name;
+    }
+
+    public void setAssignment_name(String assignment_name) {
+        this.assignment_name = assignment_name;
+    }
+    private String assignment_name;
     
     public List<Question> getBPQuestions(){
         return QuestionDAO.getBPQuestionByAssignment(assignment.getAssignment_id());
@@ -159,7 +168,7 @@ public class AssignmentBean {
         Timestamp ms = new Timestamp (MP_start_date.getTime());
         Timestamp me = new Timestamp (MP_end_date.getTime());
         Assignment as = new Assignment(assignment_descr, is, ie, bs,
-                be, ms, me, user_id, course_id, assignment_number);
+                be, ms, me, user_id, course_id, assignment_number, assignment_name);
         AssignmentDAO.updateAssignment(as);
     }
     
@@ -174,7 +183,7 @@ public class AssignmentBean {
 
         /* insert assignment */
         Assignment assignment = new Assignment(assignment_descr, is, ie, bs,
-                be, ms, me, user_id, course_id, assignment_number);
+                be, ms, me, user_id, course_id, assignment_number,assignment_name);
         AssignmentDAO.insertAssignment(assignment);
         assignment = AssignmentDAO.getAssignmentByDateAndIds(is, user_id,
                 course_id);
