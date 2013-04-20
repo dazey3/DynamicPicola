@@ -25,7 +25,7 @@ public class TEST {
 //            System.out.println("==============");
 //        }
         boolean b=false;
-        int a;
+        int a=0;
         System.out.println(a);
     }
 }

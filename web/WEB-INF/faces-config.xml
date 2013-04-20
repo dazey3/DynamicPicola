@@ -145,6 +145,7 @@
 	</navigation-case>
     </navigation-rule>
     
+    
     <navigation-rule>
 	<from-view-id>/main.xhtml</from-view-id>
 	<navigation-case>

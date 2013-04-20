@@ -337,7 +337,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println("AssignmentID: " + ((MenuTab)event.getData()).getAssignment().getAssignment_id());
         System.out.println();
         this.selectedAssignment = ((MenuTab)event.getData()).getAssignment();
-       
+        
         
         this.assignment_descr = this.selectedAssignment.getAssignment_descr();
         this.indivdual_start_date = this.selectedAssignment.getIndividual_start_date();

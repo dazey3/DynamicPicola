@@ -110,28 +110,34 @@
                                                 <p:messages id="successMessage" showDetail="true" autoUpdate="true" closable="true" />
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Assignment #{groupSelectedBean.assignment_id}:"/>
                                                 <h:panelGrid columns="1">
-                                                     <h:outputText style="font-weight:bold;" value="Assignment Name:"/>
+                                                    <h:outputText style="font-weight:bold;" value="Assignment Name:"/>
                                                     <h:inputText value="#{groupSelectedBean.assignment_name}"/>
                                                 </h:panelGrid>
                                                 <h:panelGrid columns="3">
                                                     <h:panelGroup>
                                                         <h:outputText style="font-weight:bold;" value="Assignment Date:"/>
                                                         <h:panelGrid columns="2">
+                                                            <h:outputText value="Start:"/>
                                                             <p:calendar  value="#{groupSelectedBean.indivdual_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal1" />
+                                                            <h:outputText value="End:"/>
                                                             <p:calendar value="#{groupSelectedBean.indivdual_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal2" />
                                                         </h:panelGrid>
                                                     </h:panelGroup>
                                                     <h:panelGroup>
                                                         <h:outputText style="font-weight:bold;" value="Assignment BP:"/>
-                                                        <h:panelGrid columns="2" cellpadding="30" >
+                                                        <h:panelGrid columns="2">
+                                                            <h:outputText value="Start:"/>
                                                             <p:calendar value="#{groupSelectedBean.BP_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal3" />
+                                                            <h:outputText value="End:"/>
                                                             <p:calendar value="#{groupSelectedBean.BP_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal4" />
                                                         </h:panelGrid>
                                                     </h:panelGroup>
                                                     <h:panelGroup>
                                                         <h:outputText style="font-weight:bold;" value="Assignment MP:"/>
                                                         <h:panelGrid columns="2">
+                                                            <h:outputText value="Start:"/>
                                                             <p:calendar value="#{groupSelectedBean.MP_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal5" />
+                                                            <h:outputText value="End:"/>
                                                             <p:calendar value="#{groupSelectedBean.MP_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal6" />
                                                         </h:panelGrid>
                                                     </h:panelGroup>
@@ -141,7 +147,7 @@
                                                     <h:panelGrid columns="1">
                                                         <h:panelGrid columns="1">
                                                             <h:outputText value="Description: "/>
-                                                            <p:inputTextarea value="#{groupSelectedBean.assignment_descr}" rows="3" cols="40" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
+                                                            <p:inputTextarea value="#{groupSelectedBean.assignment_descr}" rows="3" cols="80" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                         </h:panelGrid>
                                                     </h:panelGrid>
                                                     <p:tabView>

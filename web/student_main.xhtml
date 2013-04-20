@@ -154,16 +154,12 @@
                                                             </p:commandButton>
                                                         </p:column>
                                                     </p:dataTable>
-
                                                 </h:panelGrid>
-
                                                 <h:panelGrid columns="1">
                                                     <h:outputText style="font-weight:bold; font-size: 20px;" value="Post Comment:"/>
                                                     <p:inputTextarea rows="5" value="#{portionBean.studentPost}" cols="30" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                     <p:commandButton update=":tabABCD:bpForm" type="submit" value="Post" actionListener="#{portionBean.studentSubmitPost()}"/>
                                                 </h:panelGrid> 
-
-
                                             </h:form>
                                         </h:panelGroup>
                                         <h:panelGroup id="MP" >
