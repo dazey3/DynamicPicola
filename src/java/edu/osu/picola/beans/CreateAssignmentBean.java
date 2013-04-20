@@ -33,6 +33,9 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
     private Date MP_end_date;
     private int assignment_number;
     private int assignment_id;
+    private String assignment_name;
+
+    
     
     private String initquestion;
     private String answer_to_question_explanation;
@@ -48,6 +51,14 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
     private String mpQuestion;
     private String mpQuestionDesc;
 
+    public String getAssignment_name() {
+        return assignment_name;
+    }
+
+    public void setAssignment_name(String assignment_name) {
+        this.assignment_name = assignment_name;
+    }
+    
     public String getAssignment_descr() {
         return assignment_descr;
     }
@@ -265,7 +276,7 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
         
         /* insert assignment */
         Assignment assignment = new Assignment(assignment_descr, is, ie, bs,
-                be, ms, me, user_id, course_id, assignment_number);
+                be, ms, me, user_id, course_id, assignment_number,assignment_name);
         String answer = "";
         
         switch(this.multiple_choice_answer.charAt(0)){

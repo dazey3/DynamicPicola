@@ -39,7 +39,7 @@ public class AssignmentHandler {
             String indivdual_start_date, String indivdual_end_date,
             String BP_start_date, String BP_end_date, String MP_start_date,
             String MP_end_date, int user_id, int course_id,
-            int assignment_number) {
+            int assignment_number, String assignment_name) {
 
         /* convert string to timestamp */
         Timestamp is = Timestamp.valueOf(indivdual_start_date);
@@ -51,7 +51,7 @@ public class AssignmentHandler {
 
         /* insert assignment */
         Assignment assignment = new Assignment(assignment_descr, is, ie, bs,
-                be, ms, me, user_id, course_id, assignment_number);
+                be, ms, me, user_id, course_id, assignment_number,assignment_name);
         AssignmentDAO.insertAssignment(assignment);
         assignment = AssignmentDAO.getAssignmentByDateAndIds(is, user_id,
                 course_id);

@@ -91,7 +91,8 @@ public class AssignmentDAO extends DAO {
                 + "', BP_end_date='" + as.getBP_end_date()
                 + "', MP_start_date='" + as.getMP_start_date()
                 + "', MP_end_date='" + as.getMP_end_date()
-                + "', assignment_number='" + as.getAssignment_number() + "'"
+                + "', assignment_number='" + as.getAssignment_number()
+                + "', assignment_name='"+ as.getAssignment_name() +"'"
                 + " WHERE assignment_id ='" + as.getAssignment_id() + "'";
         System.out.println("[jakers] = " + update);
         updateDB(update);
