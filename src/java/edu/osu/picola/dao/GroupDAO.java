@@ -128,22 +128,31 @@ public class GroupDAO extends DAO {
      */
     public static List<Group> getAllGroupsAssignedAssignment(int assignment_id) {
         List<Group> groupList = new ArrayList<Group>();
-     
-        String query = "SELECT * FROM test_group dg "
-                + "INNER JOIN user u ON "
-                + "dg.user_id=u.user_id JOIN assign_to ast on ast.group_id=dg.group_id "
-                + "where ast.assignment_id='" + assignment_id + "' ORDER BY dg.group_id";
-
+ 
+        /* gets all the group ids assignment an assignment */
+        String query = "SELECT gi.group_id FROM group_ids gi INNER JOIN " +
+        "assign_to ato ON ato.group_id=gi.group_id "+
+        "WHERE ato.assignment_id='"+assignment_id+"'";
+        
         ResultSet rs = queryDB(query);
-
+        List<Integer> gids = new ArrayList<Integer>();
+        
         try {
             while (rs.next()) {
-                groupList.add(loadGroup(rs));
+                gids.add(rs.getInt("group_id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        
+        /* load all members for each of the groups */
+        for (Integer id : gids) {
+            query = "SELECT * FROM test_group tg INNER JOIN user u ON tg.user_id=u.user_id WHERE group_id='"+id+"'";
+            rs = queryDB(query);
+            groupList.add(loadGroup(rs));
+        }
+
         return groupList;
     }
 
@@ -208,20 +217,20 @@ public class GroupDAO extends DAO {
     private static Group loadGroup(ResultSet rs) {
         Group group = new Group();
         try {
-            rs.next();
-            group.setGroup_id(rs.getInt("group_id"));
-            group.add(new User(rs));
+//            rs.next();
+//            group.setGroup_id(rs.getInt("group_id"));
+//            group.add(new User(rs));
             while (rs.next()) {
                 /*
                  * only add if the user belongs to a different group
                  */
-                if (group.getGroup_id() == rs.getInt("group_id")) {
+//                if (group.getGroup_id() == rs.getInt("group_id")) {
                     group.setGroup_id(rs.getInt("group_id"));
                     group.add(new User(rs));
-                } else {
-                    rs.previous();
-                    break;
-                }
+//                } else {
+//                    rs.previous();
+//                    break;
+//                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

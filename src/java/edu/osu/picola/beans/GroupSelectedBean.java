@@ -324,6 +324,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
    
     public void onTabChange(TabChangeEvent event) {
         System.out.println("ON TAB CHANGE EVENT");
+        
         System.out.println("AssignmentID: " + ((MenuTab)event.getData()).getAssignment().getAssignment_id());
         System.out.println();
         this.selectedAssignment = ((MenuTab)event.getData()).getAssignment();
