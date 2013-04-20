@@ -41,7 +41,8 @@ public class LoginBean implements Serializable{
         if (user != null) {
             // TODO GET PASSWORD
             // TODO check user password
-            wasLogged = password.equals("password");
+            //wasLogged = password.equals("password");
+            wasLogged = UserDAO.verifyPassword(password, user.getUser_id());
             if (wasLogged) {
                 // update login time
                 user.setLast_login_date(new Timestamp(System.currentTimeMillis()));
