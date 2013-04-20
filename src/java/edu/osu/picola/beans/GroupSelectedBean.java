@@ -276,6 +276,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         List<Question> bps = QuestionDAO.getBPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
         List<Question> mps = QuestionDAO.getMPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
         
+        this.selectedAssignment.setAssignment_name(this.assignment_name);
         this.selectedAssignment.setAssignment_descr(this.assignment_descr);
         this.selectedAssignment.setIndividual_start_date(new Timestamp(this.indivdual_start_date.getTime()));
         this.selectedAssignment.setIndividual_end_date(new Timestamp(this.indivdual_end_date.getTime()));
