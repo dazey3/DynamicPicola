@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="navbar navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                    </a>
+                                    
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                    HOME
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                                    <h:form>
+                                        <h:outputText value="Name"></h:outputText>
+                                        <h:inputText id="user_username" value="#{loginBean.name}"></h:inputText>
+                                        <h:outputText value="Password"></h:outputText>
+                                        <h:inputSecret id="user_password" value="#{loginBean.password}"></h:inputSecret>
+                                        <h:commandButton class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" action="login" value="Login" ></h:commandButton>
+                                    </h:form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </h:body>
+</html>
+

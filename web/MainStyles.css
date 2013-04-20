@@ -1,0 +1,54 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+#subBackGround{
+    background-image: url(images/website-background.jpg);
+    padding: 0px;
+    
+    /*margin-bottom: 0px;
+    padding: 0px;*/
+}
+
+#assignment{
+    background-image: url(images/redbutton.png);
+}
+
+#group{
+    background-color: orange;
+}
+
+#banner{
+    background-image: url(images/banner-ohio-state.jpg);
+    width: 1200px;
+    height: 100px;
+}
+
+#logo{
+    background-image: url(images/PICOLALOGO2withShadow.png);
+    width: 140px;
+    height: 100px;
+}
+
+body{
+    background-image: url(images/light-grey-linen-iPad.jpg);
+}
+
+h1{
+    color: white;
+}
+
+.ui-widget, .ui-widget .ui-widget
+{
+    font-size: 90% !important;
+}
+
+.ui-menubar .ui-menuitem-link {
+   font-size: 20px;
+}
+
+.ui-toolbar {
+    padding: 0px;
+   margin:0px;
+}

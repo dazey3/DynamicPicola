@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <managed-bean>
+        <managed-bean-name>assignmentBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.AssignmentBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>editAssignmentBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.EditAssignmentBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>viewProfileBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.ViewProfileBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>formBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.FormBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.LoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>courseBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.CourseBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>createAssignmentBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.CreateAssignmentBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>groupBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.GroupBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>studentAssignmentMenuBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.studentbeans.StudentAssignmentMenuBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        
+    <managed-bean>
+        <managed-bean-name>portionBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.studentbeans.PortionBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>postBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.PostBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>questionBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.QuestionBean1</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    /<converter>
+        <converter-for-class>edu.osu.picola.dataobjects.Course</converter-for-class>
+        <converter-class>edu.osu.picola.businesslogic.CourseConverter</converter-class>
+    </converter>
+    <managed-bean>
+        <managed-bean-name>courseSelectionBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.CourseSelectionBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <converter>
+        <converter-for-class>edu.osu.picola.dataobjects.Course</converter-for-class>
+        <converter-class>edu.osu.picola.businesslogic.CourseConverter</converter-class>
+    </converter>
+    <managed-bean>
+        <managed-bean-name>groupSelectedBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.GroupSelectedBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>assignmentMenuBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.AssignmentMenuBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <navigation-rule>
+	<from-view-id>/login.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.loginUser}</from-action>
+		<from-outcome>instructor</from-outcome>
+		<to-view-id>/main.xhtml</to-view-id>
+	</navigation-case>
+        <navigation-case>
+		<from-action>#{loginBean.loginUser}</from-action>
+		<from-outcome>student</from-outcome>
+		<to-view-id>/student_main.xhtml</to-view-id>
+	</navigation-case>
+	<navigation-case>
+		<from-action>#{loginBean.loginUser}</from-action>
+		<from-outcome>failure</from-outcome>
+		<to-view-id>/login.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/AccountManagementPage.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.getUserRole}</from-action>
+		<from-outcome>instructor</from-outcome>
+		<to-view-id>/main.xhtml</to-view-id>
+	</navigation-case>
+        <navigation-case>
+		<from-action>#{loginBean.getUserRole}</from-action>
+		<from-outcome>student</from-outcome>
+		<to-view-id>/student_main.xhtml</to-view-id>
+	</navigation-case>
+	<navigation-case>
+		<from-action>#{loginBean.getUserRole}</from-action>
+		<from-outcome>failure</from-outcome>
+		<to-view-id>/login.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/main.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.setupManagement}</from-action>
+		<from-outcome>success</from-outcome>
+		<to-view-id>/AccountManagementPage.xhtml</to-view-id>
+	</navigation-case>
+        <navigation-case>
+		<from-action>#{loginBean.setupManagement}</from-action>
+		<from-outcome>failure</from-outcome>
+		<to-view-id>/AccountManagementPage.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/student_main.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.setupManagement}</from-action>
+		<from-outcome>success</from-outcome>
+		<to-view-id>/AccountManagementPage.xhtml</to-view-id>
+	</navigation-case>
+        <navigation-case>
+		<from-action>#{loginBean.setupManagement}</from-action>
+		<from-outcome>failure</from-outcome>
+		<to-view-id>/AccountManagementPage.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/main.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.logoutUser}</from-action>
+		<from-outcome>success</from-outcome>
+		<to-view-id>/login.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/student_main.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.logoutUser}</from-action>
+		<from-outcome>success</from-outcome>
+		<to-view-id>/login.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	<from-view-id>/AccountManagementPage.xhtml</from-view-id>
+	<navigation-case>
+		<from-action>#{loginBean.logoutUser}</from-action>
+		<from-outcome>success</from-outcome>
+		<to-view-id>/login.xhtml</to-view-id>
+	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/View_Assignment.xhtml</from-view-id>
+        <navigation-case>
+        <from-outcome>showgroup</from-outcome>
+            <to-view-id>/View_Group.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>viewinitial</from-outcome>
+            <to-view-id>/View_Initial.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>viewBP</from-outcome>
+            <to-view-id>/View_BP.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>viewMP</from-outcome>
+            <to-view-id>/View_MP.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>addinitial</from-outcome>
+            <to-view-id>/Add_Initial.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>addBP</from-outcome>
+            <to-view-id>/Add_BP.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+        <from-outcome>addMP</from-outcome>
+            <to-view-id>/Add_MP.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/Add_BP.xhtml</from-view-id>
+        <from-outcome>createBP</from-outcome>
+        <navigation-case>
+            <to-view-id>/View_BP.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/Add_MP.xhtml</from-view-id>
+        <from-outcome>createMP</from-outcome>
+        <navigation-case>
+            <to-view-id>/View_MP.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/courseAndAssignmentsPage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addAssignment</from-outcome>
+            <to-view-id>/Add_Assignment.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>showassignment</from-outcome>
+            <to-view-id>/View_Assignment.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    
+    <navigation-rule>
+        <from-view-id>/viewCoursesPage.xhtml</from-view-id>
+        <from-outcome>show</from-outcome>
+        <navigation-case>
+            <to-view-id>/courseAndAssignmentsPage.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/View_Group.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>showpost</from-outcome>
+            <to-view-id>/View_Post.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>newPost</from-outcome>
+            <to-view-id>/Create_Post.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/View_Post.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newPost2</from-outcome>
+            <to-view-id>/Create_Post.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/Create_Post.xhtml</from-view-id>
+        <from-outcome>createPost</from-outcome>
+        <navigation-case>
+            <to-view-id>/View_Group.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="well well-small">
+            <div class="row">
+                <h:form>
+                <div class ="span10">
+                    <div class="span3">
+                        Description:
+                        <textarea value ="#{assignmentBean.assignment_descr}" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class ="span10">
+                    <div class="span3">
+                        Assignment Start Date:
+                        <h:inputText value="#{assignmentBean.indivdual_start_date}"></h:inputText>
+                    </div>
+                    <div class="span3">
+                        <h:inputText value="#{assignmentBean.indivdual_end_date}"></h:inputText>
+                    </div>
+                </div>
+                <div class ="span10">
+                    <div class="span3">
+                        Assignment BP Start Date:
+                        <h:inputText value="#{assignmentBean.BP_start_date}"></h:inputText>
+                    </div>
+                    <div class="span3">
+                        <h:inputText value="#{assignmentBean.BP_end_date}"></h:inputText>
+                    </div>
+                </div>
+                <div class ="span10">
+                    <div class="span3">
+                        Assignment MP Start Date:
+                        <h:inputText value="#{assignmentBean.MP_start_date}"></h:inputText>
+                    </div>
+                    <div class="span3">
+                        <h:inputText value="#{assignmentBean.MP_end_date}"></h:inputText>
+                    </div>
+                </div>
+                <div class ="span10">
+                    <div class="span5">
+                        <button class="btn btn-primary" style="clear: left; width: 50%; height: 32px; font-size: 13px;" type="submit" name="commit">Post Assignment</button>
+                        <button class="btn" style="clear: left; width: 25%; height: 32px; font-size: 13px;" type="cancel" name="cancel">Cancel</button>
+                    </div>
+                </div>
+                    </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+

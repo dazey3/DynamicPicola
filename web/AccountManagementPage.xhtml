@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Account Management</title>
+        <link rel="stylesheet" type="text/css" href="bootstrapformhelpers/css/bootstrap-formhelpers.css"/>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css"/>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="MainStyles.css"/>
+        <link rel="stylesheet" type="text/css" href="HeaderStyles.css"/>
+    </h:head>
+    <h:body class="body">
+        <div id="header">
+            <img src="images/PICOLA_LOGO.png" width="140" height="100"></img>
+        </div>
+
+        <h:form>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Home" action="#{loginBean.getUserRole}"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton  value="Logout" action="#{loginBean.logoutUser}"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <h:panelGroup id="hello">
+            <div class="well well-small" id="subBackGround">
+                    <h:form styleClass="well" id ="profileDialog">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <h:panelGrid columns="1">
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <h:graphicImage id="userImage" value="#{loginBean.userImagePath}" />
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="New Image URL:"/>
+                                    <p:inputText value="#{loginBean.userImagePath}"/>
+                                    <h:panelGrid columns="2">
+                                        <p:commandButton value ="Test" update=":profileDialog:userImage" actionListener="#{loginBean.testImagePath}"/>
+                                        <p:commandButton value ="Undo" update=":profileDialog:userImage" actionListener="#{loginBean.revertImagePath}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns ="2">
+                                <h:outputText style="font-weight:bold;" value="Name: "/>
+                                <h:outputText style="font-weight:bold;" value="#{loginBean.firstName}"/>
+                                <h:outputText value="Gender: "/>
+                                <h:outputText value="#{loginBean.gender}"/>
+                                <h:outputText value="Description: "/>
+                                <h:outputText value="#{loginBean.description}"/>
+                                <h:outputText value="Birthday: "/>
+                                <h:outputText value="#{loginBean.birthday}"/>
+                                <h:outputText value="Last Login Date: "/>
+                                <h:outputText value="#{loginBean.updateDate}"/>
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <p:commandButton update=":profileDialog" value="Update Information" actionListener="#{loginBean.upDateInformation}"/>
+                </h:form>
+            </div>
+        </h:panelGroup>
+
+    </h:body>
+</html>
+

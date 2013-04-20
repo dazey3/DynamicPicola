@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>PICOLA</title>
+        <link rel="stylesheet" type="text/css" href="bootstrapformhelpers/css/bootstrap-formhelpers.css"/>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css"/>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="MainStyles.css"/>
+        <link rel="stylesheet" type="text/css" href="HeaderStyles.css"/>
+    </h:head>
+    <h:body class="body">
+        <div id="header">
+            <img src="images/PICOLA_LOGO.png" width="140" height="100"></img>
+        </div>
+
+        <h:form>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="AccountManagement" action="#{loginBean.setupManagement}"></p:commandButton>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton  value="Logout" action="#{loginBean.logoutUser}"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <h:panelGroup id="hello">
+            <ui:fragment rendered="#{loginBean.isUserLoggedIn()}">
+                <div class="well well-small" id="subBackGround">
+                    <h:form id ="controlPanel">
+                        <p:panelGrid columns="1">
+                            <h:outputText style="font-weight:bold; font-size: 20px;" value="SELECT CLASS:" />
+                            <p:selectOneMenu value="#{studentAssignmentMenuBean.selectedCourse}">
+                                <f:selectItems value="#{studentAssignmentMenuBean.courses}"  />
+                                <p:ajax update=":tabABCD:accordionOfAssignments , :tabABCD:rosterForm" event="change" listener="#{studentAssignmentMenuBean.updateModel()}" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </h:form>
+
+                    <h:panelGroup>
+                        <p:tabView id="tabABCD">
+
+                            <p:tab id="hometab" title="Home">
+                                <p:layout style="height: 400px;">
+                                    <p:layoutUnit position="center">
+                                        Welcome to Picola Student View! Select a tab to continue. 
+                                    </p:layoutUnit>
+                                </p:layout>
+                            </p:tab>
+
+                            <p:tab id="tab1" title="Assignments">
+                                <p:layout style="height: 400px;">
+                                    <p:layoutUnit size="300" minSize="200" position="west" resizable="true" collapsible="false" closable="false">
+                                        <h:form id="accordionOfAssignments">
+                                            <p:accordionPanel activeIndex="null" value="#{studentAssignmentMenuBean.menus}" var="menu" >
+                                                <p:ajax event="tabChange" listener="#{portionBean.tabChangeListener}"/>
+                                                <p:tab title="#{menu.title}">
+                                                    <p:dataList value="#{menu.list}" var="a_question">
+                                                        <p:column>
+                                                            <p:commandLink value="#{a_question}" update=":tabABCD:Indiv , :tabABCD:BP , :tabABCD:MP" actionListener="#{portionBean.processAction}"/>
+                                                        </p:column>  
+                                                    </p:dataList>
+                                                </p:tab>
+                                            </p:accordionPanel>
+                                        </h:form>
+                                    </p:layoutUnit>
+                                    <p:layoutUnit position="center">
+                                        <h:panelGroup id ="Indiv" >
+                                            <h:form id="indivForm" rendered="#{portionBean.renderIndiv()}">
+
+                                                <p:messages for ="submitMultChoice" />
+                                                <h:outputText value = "Individual Question:/n 
+                                                              #{portionBean.question}/n"/>
+
+                                                <h:outputText value ="This is an indiv question/n"/>
+
+
+
+                                                <h:outputText style="font-weight:bold;" value="Answers:"/>
+                                                <p:selectOneRadio id="customRadio" value="#{portionBean.selectedAnswer}" layout="custom">  
+                                                    <f:selectItem itemLabel="Option 1" itemValue="a" />  
+                                                    <f:selectItem itemLabel="Option 2" itemValue="b" />  
+                                                    <f:selectItem itemLabel="Option 3" itemValue="c" />  
+                                                    <f:selectItem itemLabel="Option 4" itemValue="d" />
+                                                    <f:selectItem itemLabel="Option 5" itemValue="e" /> 
+                                                </p:selectOneRadio>
+                                                <h:panelGrid columns="2">  
+
+                                                    <h:outputLabel for="opt1" value="#{portionBean.option_a}" />
+                                                    <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
+
+
+                                                    <h:outputLabel for="opt2" value="#{portionBean.option_b}" /> 
+                                                    <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
+
+
+                                                    <h:outputLabel for="opt3" value="#{portionBean.option_c}" />
+                                                    <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
+
+
+                                                    <h:outputLabel for="opt4" value="#{portionBean.option_d}" />
+                                                    <p:radioButton id="opt4" for="customRadio" itemIndex="3"/>  
+
+                                                    <h:outputLabel for="opt5" value="#{portionBean.option_e}" />                                                               
+                                                    <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
+
+
+                                                </h:panelGrid>
+
+
+                                                <p:commandButton id="submitMultChoice" type="submit" value="Submit" update="indivForm" actionListener="#{portionBean.submitAnswer}"/>  
+
+
+                                            </h:form>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="BP">
+                                            <h:form id="bpForm" rendered="#{portionBean.renderBP()}">
+
+                                                <h:outputText value ="BP Question: #{portionBean.question}"></h:outputText>
+
+
+                                                <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                                <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
+                                                <h:panelGrid columns="#{portionBean.currentGroup.size()}">
+                                                    <ui:repeat value ="#{portionBean.currentGroup}" var ="user">
+                                                        <h:outputText value="#{user.f_name}  "/>
+                                                    </ui:repeat>
+                                                </h:panelGrid>
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Discussion: "/>
+                                                    <p:dataTable  var="post" value="#{portionBean.currentGroupDiscussion}">
+                                                        <p:column headerText="User">  
+                                                            <h:outputText value="#{post.user_id}" />
+                                                        </p:column>
+                                                        <p:column headerText="Time">  
+                                                            <h:outputText value="#{post.post_time}" />
+                                                        </p:column>
+                                                        <p:column headerText="Content">  
+                                                            <h:outputText value="#{post.post_text}" />
+                                                        </p:column>
+                                                        <p:column headerText="Summary">
+                                                            <p:selectBooleanCheckbox disabled="true" value="#{post.summary_bit}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Delete">
+                                                            <p:commandButton oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
+                                                                <f:setPropertyActionListener value="#{post}" target="#{portionBean.selectedPost}" />
+                                                            </p:commandButton>
+                                                        </p:column>
+                                                    </p:dataTable>
+
+                                                </h:panelGrid>
+
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Post Comment:"/>
+                                                    <p:inputTextarea rows="5" value="#{portionBean.studentPost}" cols="30" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
+                                                    <p:commandButton update=":tabABCD:bpForm" type="submit" value="Post" actionListener="#{portionBean.studentSubmitPost()}"/>
+                                                </h:panelGrid> 
+
+
+                                            </h:form>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="MP" >
+                                            <h:form id="mpForm" rendered="#{portionBean.renderMP()}">
+
+                                                <h:outputText value ="MP Question: #{portionBean.question}"></h:outputText>
+
+
+                                                <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                                <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
+                                                <h:panelGrid columns="#{portionBean.currentGroup.size()}">
+                                                    <ui:repeat value ="#{portionBean.currentGroup}" var ="user">
+                                                        <h:outputText value="#{user.f_name}  "/>
+                                                    </ui:repeat>
+                                                </h:panelGrid>
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Discussion: "/>
+                                                    <p:dataTable  var="post" value="#{portionBean.currentGroupDiscussion}">
+                                                        <p:column headerText="User">  
+                                                            <h:outputText value="#{post.user_id}" />
+                                                        </p:column>
+                                                        <p:column headerText="Time">  
+                                                            <h:outputText value="#{post.post_time}" />
+                                                        </p:column>
+                                                        <p:column headerText="Content">  
+                                                            <h:outputText value="#{post.post_text}" />
+                                                        </p:column>
+                                                        <p:column headerText="Summary">
+                                                            <p:selectBooleanCheckbox disabled="true" value="#{post.summary_bit}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Delete">
+                                                            <p:commandButton oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
+                                                                <f:setPropertyActionListener value="#{post}" target="#{portionBean.selectedPost}" />
+                                                            </p:commandButton>
+                                                        </p:column>
+                                                    </p:dataTable>
+
+                                                </h:panelGrid>
+
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Post Comment:"/>
+                                                    <p:inputTextarea rows="5" value="#{portionBean.studentPost}" cols="30" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
+                                                    <p:commandButton update=":tabABCD:mpForm" type="submit" value="Post" actionListener="#{portionBean.studentSubmitPost()}"/>
+                                                </h:panelGrid>
+                                            </h:form>
+                                        </h:panelGroup>
+                                    </p:layoutUnit>
+                                </p:layout>
+                            </p:tab>
+                            <p:tab id="tab2" title="Roster">
+                                <h:form id="rosterForm">
+                                    <p:dataList value="#{studentAssignmentMenuBean.getUsers()}" var="student" id="students" paginator="true" rows="5" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" type="none">  
+                                        <f:facet name="header">Students</f:facet>  
+                                        <h:outputText value="#{student.l_name}, #{student.f_name}" style="margin-left:10px" />  
+                                        <br />  
+                                    </p:dataList> 
+                                </h:form>
+
+                            </p:tab>
+
+                            <p:tab id="profile" title="My Profile">
+                                <h:form id="profileForm">
+                                    <!--- Needs to be ported in -->
+                                </h:form>
+
+                            </p:tab>
+
+                        </p:tabView>
+                    </h:panelGroup>
+                </div>
+            </ui:fragment>
+        </h:panelGroup>
+        <script src="bootstrap/js/bootstrap-collapse.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+    </h:body>
+</html>
