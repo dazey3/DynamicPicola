@@ -8,8 +8,6 @@
 <title>Picola Login</title>
 <meta name="Picola Project Login Page" content="" />
         <title>Facelet Title</title>
-        
-        
         <style>
 
 /* HTML elements  */		
@@ -174,30 +172,20 @@ body{
         
     </h:head>
     
-    
-    
-    
     <h:body>
-        
-    <h:form id="login"> 
-        
-    <h1>Log into your student account.</h1>
-    
-    <div>
-    	<h:outputText value="Name"></h:outputText>
-        <h:inputText value="#{loginBean.name}"></h:inputText>
-    	<h:outputText value="Password"></h:outputText>
-	<h:inputSecret value="#{loginBean.password}"></h:inputSecret>
-        </div>
-    
-  
-        <div class="submit">
-            <h:commandButton value="Login" action="#{loginBean.loginUser}"></h:commandButton>
-    </div>			
-<p:messages id="loginMessage" showDetail="true" autoUpdate="true" closable="true" />
-    
-</h:form>	
-        
+        <h:form id="login"> 
+            <h1>Log into your PI-COLA account.</h1>
+            <div>
+                <h:outputText value="Name"></h:outputText>
+                <h:inputText value="#{loginBean.name}"></h:inputText>
+                <h:outputText value="Password"></h:outputText>
+                <h:inputSecret value="#{loginBean.password}"></h:inputSecret>
+                </div>
+                <div class="submit">
+                <h:commandButton value="Login" action="#{loginBean.loginUser}"></h:commandButton>
+            </div>			
+            <p:messages id="loginMessage" showDetail="true" autoUpdate="true" closable="true" />
+        </h:form>	
     </h:body>
 </html>
 
