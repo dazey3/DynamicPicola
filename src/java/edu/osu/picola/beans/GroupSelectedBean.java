@@ -1,6 +1,7 @@
 package edu.osu.picola.beans;
 
 import edu.osu.picola.beans.AssignmentMenuBean.MenuTab;
+import edu.osu.picola.businesslogic.GroupHandler;
 import edu.osu.picola.dao.AssignmentDAO;
 import edu.osu.picola.dao.PostDAO;
 import edu.osu.picola.dao.QuestionDAO;
@@ -251,11 +252,17 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     
     public void createGroups(ActionEvent ae){
         System.out.println("GroupSelectedBean: createGroups");
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Created Groups!"));
+        
+        String message = GroupHandler.autoGrouper(AssignmentMenuBean.selectedCourse.getCourse_id(), this.selectedAssignment.getAssignment_id());
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Create Group: ", message));
     }
     
     public void deleteAssignment(ActionEvent ae){
         System.out.println("GroupSelectedBean: deleteAssignment: " + this.selectedAssignment);
+        
+        AssignmentDAO.deleteAssignmentByAssignmentId(assignment_id);
+        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Deleted Assignment!"));
     }
     

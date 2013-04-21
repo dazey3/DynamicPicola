@@ -23,15 +23,18 @@ public class GroupHandler {
     private static int groupCount = 4;
     
     
-     public static void autoGrouper(int course_id, int assignment_id, int question_id) {
+     public static String autoGrouper(int course_id, int assignment_id) {
         
+         /* get question_id */
+        int question_id = QuestionDAO.getInitQuestion(assignment_id).getQuestion_id();
+         
         /* prepare due date check data */
         Assignment a = AssignmentDAO.getAssignment(assignment_id);
         Timestamp due = a.getIndividual_end_date();
         Timestamp now = new Timestamp(System.currentTimeMillis());
         
         /* if the due data has passed */
-        if (due.before(now)) {
+        if (now.after(due)) {
 
             /* form right and wrong list of people who responded */
             List<List<MCResponse>> rightAndWrong =
@@ -49,6 +52,7 @@ public class GroupHandler {
                 wrong.add(noAnswerResponse);
             }
     
+            /* checks to see the size that a group should be */
             int courseSize= UserDAO.getCourseRoster(course_id).size();
             if (courseSize <= 9) {
                 groupCount = 3 ;
@@ -64,10 +68,16 @@ public class GroupHandler {
                 groupCount = (int)Math.sqrt((double)courseSize);
             }
             
-            
+            if(courseSize == 0){
+                return "Course Roster Empty";
+            }
             /* group everyone */
             GroupHandler.autoGroup(right, wrong, course_id, course_id, assignment_id);
-        } 
+            return "Successfully grouped students";
+        }
+        else{
+            return "Attempting to do grouping before group date";
+        }
     }
     
     /**
