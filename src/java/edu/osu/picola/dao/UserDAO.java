@@ -287,11 +287,38 @@ public class UserDAO extends DAO {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
         return badStudents;
     }
 
-    
+    public static List<User> getAllStudentsNotInGroupForAssignment(int assignment_id,int course_id) {
+        List<User> groupedStudents = new ArrayList<User>();
+        List<User> enrolled = getCourseRoster(course_id);
+        List<User> grouplessStudents = new ArrayList<User>();
+        String query = "SELECT * FROM assign_to ato INNER JOIN test_group tg " +
+                       "ON ato.group_id=tg.group_id INNER JOIN user u " +
+                       "ON u.user_id=tg.user_id " +
+                       "WHERE ato.assignment_id='"+assignment_id+"'";
+        ResultSet rs = queryDB(query);
+        
+        try {
+            while(rs.next()) {
+                groupedStudents.add(new User(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for ( User u : enrolled) {
+            for (User grouped: groupedStudents) {
+                if (u.getUser_id() == grouped.getUser_id()) {
+//                    isGroup
+                    break;
+                }
+            }
+        }
+        
+        return grouplessStudents;
+    }
     
     
     /**

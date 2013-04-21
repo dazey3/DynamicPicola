@@ -29,9 +29,9 @@ public class GroupDAO extends DAO {
                 + user_id + "' AND group_id = '" + group_id + "')";
         deleteRecord(delete);
     }
-
+    
   
-    /**
+/**
  * Returns the next unused group id
  */
     public static int getNextGroupId() {
@@ -104,9 +104,6 @@ public class GroupDAO extends DAO {
                 + "')";
         insertDB(insert);
     }
-
-    
-
     
     public static void insertGroupId(int group_id, int group_number) {
 
