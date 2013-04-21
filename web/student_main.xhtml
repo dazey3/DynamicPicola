@@ -50,6 +50,20 @@
                                 <p:layout style="height: 400px;">
                                     <p:layoutUnit position="center">
                                         Welcome to Picola Student View! Select a tab to continue. 
+                                        
+                                        <h:form id ="homeid">
+                                            
+                                            <h:panelGroup id="hometabbing">
+                                                <h:panelGrid columns ="1">
+                                                    
+                                                    <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value ="Course: "/>
+                                                    <h:outputText style="font-weight:bold; font-size:20px;" value ="#{studentAssignmentMenuBean.selectedCourse.course_title}"/>
+                                                    
+                                                    
+                                                </h:panelGrid>
+                                            </h:panelGroup>
+                                            
+                                        </h:form>
                                     </p:layoutUnit>
                                 </p:layout>
                             </p:tab>
@@ -92,13 +106,13 @@
                                                     
                                                     
                                                     
-                                                    <h:outputText style = "font-weight: bold" value= "Individual Portion:  "/>
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Individual Portion:  "/>
                                                     <h:outputText value = " Opens on #{portionBean.indivdual_start_date}, must submit by #{portionBean.indivdual_end_date}"/> 
                                                     
-                                                    <h:outputText style = "font-weight: bold" value= "Background Portion:  "/>
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Background Portion:  "/>
                                                     <h:outputText value = " Opens on #{portionBean.BP_start_date}, must submit by #{portionBean.BP_end_date}"/> 
                                                     
-                                                    <h:outputText style = "font-weight: bold" value= "Main Portion:  "/>
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Main Portion:  "/>
                                                     <h:outputText value = " Opens on #{portionBean.MP_start_date}, must submit by #{portionBean.MP_end_date}"/> 
                                                     
                                                     
