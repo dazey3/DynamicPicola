@@ -98,6 +98,14 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     private String mpQuestionDesc;
     private Assignment selectedAssignment;
 
+    public Assignment getSelectedAssignment() {
+        return selectedAssignment;
+    }
+
+    public void setSelectedAssignment(Assignment selectedAssignment) {
+        this.selectedAssignment = selectedAssignment;
+    }
+    
     public String getAssignment_name() {
         return assignment_name;
     }
@@ -246,6 +254,11 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Created Groups!"));
     }
     
+    public void deleteAssignment(ActionEvent ae){
+        System.out.println("GroupSelectedBean: deleteAssignment: " + this.selectedAssignment);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Deleted Assignment!"));
+    }
+    
     public void removePost(ActionEvent ae){
         System.out.println("GroupSelectedBean: RemovePost: " + this.selectedPost.getPost_text());
         PostDAO.removePost(selectedPost.getPost_id());
@@ -329,7 +342,9 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println("Number of MP Questions: " + mp.size());
         
         if(init != null){
+            
             this.initquestion = init.getQuestion();
+            System.out.println("Initial Question: " + this.initquestion);
             this.answer_to_question_explanation = init.getAnswer_to_question_explanation();
             this.multiple_choice_answer = init.getMultiple_choice_answer();
             this.option_a = init.getOption_a();
@@ -338,15 +353,32 @@ public class GroupSelectedBean implements Serializable, ActionListener{
             this.option_d = init.getOption_d();
             this.option_e = init.getOption_e();
         }
+        else{
+            this.initquestion = "";
+            this.multiple_choice_answer = "";
+            this.option_a = "";
+            this.option_b = "";
+            this.option_c = "";
+            this.option_d = "";
+            this.option_e = "";
+        }
         
     
         if(bp.size()>0){
             this.bpQuestion = bp.get(0).getQuestion();
             this.bpQuestionDesc = bp.get(0).getAnswer_to_question_explanation();
         }
+        else{
+            this.bpQuestion = "";
+            this.bpQuestionDesc = "";
+        }
         if(mp.size()>0){
             this.mpQuestion = mp.get(0).getQuestion();
             this.mpQuestionDesc = mp.get(0).getAnswer_to_question_explanation();
+        }
+        else{
+            this.mpQuestion = "";
+            this.mpQuestionDesc = "";
         }
         
         this.assignmentShow = true;
@@ -368,7 +400,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println("GROUP SELECTED: " + selection);
     }
     
-    private void clearSelection(){
+    public void clearSelection(){
         System.out.println("CLEARING GROUP SELECTION!");
         this.selection = null;
         this.currentGroupDiscussion = new ArrayList<Post>();

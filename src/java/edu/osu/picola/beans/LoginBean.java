@@ -56,11 +56,17 @@ public class LoginBean implements Serializable{
                     case(3):
                         return "Role3";
                 }
-                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Login Failed:", "User Role Not Found (contact administrator)"));
                 return "failure";
             }
+            else{
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Login Failed:", "Incorrect Password"));
+            }
         }
-        System.out.println("TESTING LOGIN! returned: " + wasLogged);
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Login Failed:", "No User Found"));
+        }
+        
         return "failure";
     }
     
