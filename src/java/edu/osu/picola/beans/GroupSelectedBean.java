@@ -451,4 +451,83 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         }
         return false;
     }
+
+    public void setBP_end_date(Date BP_end_date) {
+        this.BP_end_date = BP_end_date;
+    }
+
+    public void setBP_start_date(Date BP_start_date) {
+        this.BP_start_date = BP_start_date;
+    }
+
+    public void setMP_end_date(Date MP_end_date) {
+        this.MP_end_date = MP_end_date;
+    }
+
+    public void setMP_start_date(Date MP_start_date) {
+        this.MP_start_date = MP_start_date;
+    }
+
+    public void setAnswer_to_question_explanation(String answer_to_question_explanation) {
+        this.answer_to_question_explanation = answer_to_question_explanation;
+    }
+
+    public void setAssignment_descr(String assignment_descr) {
+        this.assignment_descr = assignment_descr;
+    }
+
+    public void setBpQuestion(String bpQuestion) {
+        this.bpQuestion = bpQuestion;
+    }
+
+    public void setBpQuestionDesc(String bpQuestionDesc) {
+        this.bpQuestionDesc = bpQuestionDesc;
+    }
+
+    public void setIndivdual_end_date(Date indivdual_end_date) {
+        this.indivdual_end_date = indivdual_end_date;
+    }
+
+    public void setIndivdual_start_date(Date indivdual_start_date) {
+        this.indivdual_start_date = indivdual_start_date;
+    }
+
+    public void setInitquestion(String initquestion) {
+        this.initquestion = initquestion;
+    }
+
+    public void setMpQuestion(String mpQuestion) {
+        this.mpQuestion = mpQuestion;
+    }
+
+    public void setMpQuestionDesc(String mpQuestionDesc) {
+        this.mpQuestionDesc = mpQuestionDesc;
+    }
+
+    public void setMultiple_choice_answer(String multiple_choice_answer) {
+        this.multiple_choice_answer = multiple_choice_answer;
+    }
+
+    public void setOption_a(String option_a) {
+        this.option_a = option_a;
+    }
+
+    public void setOption_b(String option_b) {
+        this.option_b = option_b;
+    }
+
+    public void setOption_c(String option_c) {
+        this.option_c = option_c;
+    }
+
+    public void setOption_d(String option_d) {
+        this.option_d = option_d;
+    }
+
+    public void setOption_e(String option_e) {
+        this.option_e = option_e;
+    }
+    
+    
+    
 }
