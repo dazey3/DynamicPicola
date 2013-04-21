@@ -102,7 +102,7 @@ public class AssignmentDAO extends DAO {
 
         String insert = "INSERT INTO assignment (assignment_descr,individual_start_date, "
                 + "individual_end_date,BP_start_date, BP_end_date, MP_start_date, "
-                + "MP_end_date,user_id, course_id, assignment_number)"
+                + "MP_end_date,user_id, course_id, assignment_number,assignment_name)"
                 + " VALUES('"
                 + as.getAssignment_descr()
                 + "', '"
@@ -116,6 +116,7 @@ public class AssignmentDAO extends DAO {
                 + "', '" + as.getUser_id()
                 + "', '" + as.getCourse_id()
                 + "', '" + as.getAssignment_number()
+                + "', '" + as.getAssignment_name()
                 + "')";
         insertDB(insert);
     }

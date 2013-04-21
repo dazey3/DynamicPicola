@@ -185,8 +185,8 @@ public class AssignmentBean {
         Assignment assignment = new Assignment(assignment_descr, is, ie, bs,
                 be, ms, me, user_id, course_id, assignment_number,assignment_name);
         AssignmentDAO.insertAssignment(assignment);
-        assignment = AssignmentDAO.getAssignmentByDateAndIds(is, user_id,
-                course_id);
+        assignment = AssignmentDAO.getAssignmentByDateAndIds(user_id,
+                course_id,assignment.getAssignment_number());
 
         /* assign assignment to each student in the course */
         List<User> roster = UserDAO.getCourseRoster(course_id);
