@@ -49,17 +49,29 @@
                             <p:tab id="hometab" title="Home">
                                 <p:layout style="height: 400px;">
                                     <p:layoutUnit position="center">
-                                        Welcome to Picola Student View! Select a tab to continue. 
                                         
                                         <h:form id ="homeid">
                                             
                                             <h:panelGroup id="hometabbing">
+                                                <h:panelGrid columns ="2">
+                                                    
+                                                   <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value ="Course: "/>
+                                                   <h:outputText style="font-weight:bold; font-size:20px; padding-right: 10px;" value ="#{studentAssignmentMenuBean.selectedCourse.course_title}"/>
+                                                    
+                                                  
+                                                   
+                                                   <h:outputText style ="font-weight:bold; font-size:16px;" value="Course instructor: "/>
+                                                   
+                                                   
+                                                    
+                                                </h:panelGrid>
+                                                <hr/>
                                                 <h:panelGrid columns ="1">
+                                                    <h:outputText style ="font-weight:bold; font-size:16px;" value="Course description: "/>
+                                                    <h:outputText value =" "/>
+                                                    <h:outputText value ="#{studentAssignmentMenuBean.selectedCourse.course_descr}"/>
                                                     
-                                                    <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value ="Course: "/>
-                                                    <h:outputText style="font-weight:bold; font-size:20px;" value ="#{studentAssignmentMenuBean.selectedCourse.course_title}"/>
-                                                    
-                                                    
+                                                   
                                                 </h:panelGrid>
                                             </h:panelGroup>
                                             

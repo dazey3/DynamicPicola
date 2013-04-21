@@ -81,6 +81,17 @@ public class StudentAssignmentMenuBean implements Serializable {
         if(users == null){ return (new ArrayList<User>());}
         return users;
     }
+    
+    public List<User> getInstructors() {
+        
+        if(this.selectedCourse == null){return new ArrayList<User>();}
+        System.out.println("COURSE_SELECTION_BEAN:CURRENTLY SELECTED COURSE: " + this.selectedCourse.getCourse_id());
+        List<User> users = UserDAO.getInstructor(this.selectedCourse.getCourse_id());
+        
+        if(users == null){ return (new ArrayList<User>());}
+        return users;
+        
+    }
      
    // public boolean isUserInGroupForAssignment() {
         /* If there isn't a group selected, the thing won't try to render it in a 'rendered' attribute. */
