@@ -328,7 +328,6 @@ public class PortionBean implements Serializable, ActionListener {
 
         Assignment a = AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id());
 
-        //System.out.println(AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id()).getAssignment_id());
         System.out.println(currentQuestion.getQuestion_id());
         System.out.println(selectedAnswer.charAt(0));
 
@@ -337,7 +336,7 @@ public class PortionBean implements Serializable, ActionListener {
                 currentQuestion.getQuestion_id(),
                 selectedAnswer.charAt(0));
 
-        /* check to see if student can submit/update their answer */
+        /* [jakers] check to see if student can submit/update their answer */
         Date now = new Date(System.currentTimeMillis());
         Date due = a.getIndividual_end_date();
         if (now.before(due)) {
@@ -346,10 +345,12 @@ public class PortionBean implements Serializable, ActionListener {
             } else {
                 MCResponseDAO.insertMCResponse(m);
             }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Your choice has been submitted.", "Successful Submission!!"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Your choice has NOT been submitted.", "Submission Unsuccesful, passed due date!"));
         }
-
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Your choice has been submitted.", "Successful Submission!!"));
-
+        
+        
     }
 
     public boolean renderIndiv() {
