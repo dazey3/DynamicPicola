@@ -33,6 +33,11 @@ public class GroupHandler {
         Timestamp due = a.getIndividual_end_date();
         Timestamp now = new Timestamp(System.currentTimeMillis());
         
+        int number_of_groups = GroupDAO.getAllGroupsAssignedAssignment(assignment_id).size();
+        if(number_of_groups > 0){
+            return "Groups Already Exist for This assignment";
+        }
+        
         /* if the due data has passed */
         if (now.after(due)) {
 
@@ -94,6 +99,7 @@ public class GroupHandler {
         /*
          * right & wrong data lists
          */
+        
         List<List<MCResponse>> rightAndWrong = new ArrayList<List<MCResponse>>();
         List<MCResponse> right = new ArrayList<MCResponse>();
         List<MCResponse> wrong = new ArrayList<MCResponse>();
@@ -135,36 +141,44 @@ public class GroupHandler {
      /* get the first new groupId */   
 	int group_id = GroupDAO.getNextGroupId();
         
+        System.out.println("Next Group ID to use: " + group_id);
 /* keeps track of the next ingroup id to be assigned to each group */
         Map<Integer, Integer> inGroupIds = new HashMap<Integer, Integer>();
      
-/* initialize each group */   
+/* initialize each group */ 
+        System.out.println("GroupHandler: Initialize Each Group");
         for (int i = 0; i < groupCount; i++) {
             GroupDAO.insertGroupId(i+group_id,i+1);
+            System.out.println("GroupDAO.insertGroupID("+ i+group_id + ", " + i+1 +") ");
             AssignmentDAO.assignToGroup(group_id+i, assignment_id);
+            System.out.println("AssignmentDAO.assignToGroup("+ i+group_id + ", " + assignment_id +") ");
             inGroupIds.put(i+group_id, 1);
+            System.out.println("IngroupIds.put("+ i+group_id + ", " + 1 + ")");
         }
-        
+        System.out.println();
 /* distribute the correct students */
+        System.out.println("GroupHandler: Distribute Correct Students");
         int tmpGid;
         for (int i = 0; i < right.size();i++) {
             int c_user = right.get(i).getUser_id();
             tmpGid = group_id + (group_id+i) % groupCount;
             int inGroup = inGroupIds.get(tmpGid);
             GroupDAO.insertUserIntoGroup(c_user, tmpGid, course_id, inGroup);
+            System.out.println("GroupDAO.insertuserIntoGroup("+ c_user + ", " + tmpGid  + ", " + course_id + ", " + inGroup + ") ");
             inGroupIds.put(tmpGid, inGroupIds.get(tmpGid) + 1);
         }
-        
+        System.out.println();
 /* distribute the wrong students */
+        System.out.println("GroupHandler: Distribute Wrong Students");
         for (int i = 0; i < wrong.size(); i++) {
             int c_user = wrong.get(i).getUser_id();
             tmpGid = group_id + (group_id+i) % groupCount;
-            
             int inGroup = inGroupIds.get(tmpGid);
             GroupDAO.insertUserIntoGroup(c_user, tmpGid, course_id, inGroup);
+            System.out.println("GroupDAO.insertuserIntoGroup("+ c_user + ", " + tmpGid  + ", " + course_id + ", " + inGroup + ") ");
             inGroupIds.put(tmpGid, inGroupIds.get(tmpGid) + 1);
         }
-
+        System.out.println();
     }
     
     public static List getGroupMCResponseMapping(int group_id, int assignment_id, int question_id) {

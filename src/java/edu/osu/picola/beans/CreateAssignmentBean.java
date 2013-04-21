@@ -23,7 +23,6 @@ import javax.faces.event.ActionListener;
 @ManagedBean(name="createAssignmentBean")
 @SessionScoped
 public class CreateAssignmentBean implements Serializable, ActionListener{
-    private Assignment selected;
     private String assignment_descr;
     private Date indivdual_start_date;
     private Date indivdual_end_date;
@@ -33,9 +32,7 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
     private Date MP_end_date;
     private int assignment_number;
     private int assignment_id;
-    private String assignment_name;
-
-    
+    private String assignment_name;   
     
     private String initquestion;
     private String answer_to_question_explanation;
