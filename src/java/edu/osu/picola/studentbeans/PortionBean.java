@@ -1,4 +1,3 @@
-
 package edu.osu.picola.studentbeans;
 
 import edu.osu.picola.studentbeans.StudentAssignmentMenuBean;
@@ -32,6 +31,7 @@ import org.primefaces.event.TabChangeEvent;
  * @author Karl
  */
 public class PortionBean implements Serializable, ActionListener {
+
     private Question currentQuestion;
     private String question;
     private String selectedAnswer;
@@ -80,7 +80,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setAssignment_name(String assignment_name) {
         this.assignment_name = assignment_name;
     }
-    
+
     public String getAssignment_descr() {
         return assignment_descr;
     }
@@ -136,7 +136,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setMP_end_date(Date MP_end_date) {
         this.MP_end_date = MP_end_date;
     }
-    
+
     public boolean isSummaryBit() {
         return summaryBit;
     }
@@ -144,7 +144,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setSummaryBit(boolean summaryBit) {
         this.summaryBit = summaryBit;
     }
-    
+
     public String getStudentPost() {
         return studentPost;
     }
@@ -152,9 +152,9 @@ public class PortionBean implements Serializable, ActionListener {
     public void setStudentPost(String studentPost) {
         this.studentPost = studentPost;
     }
-    
+
     public PortionBean() {
-        currentGroupDiscussion = new ArrayList<Post>(); 
+        currentGroupDiscussion = new ArrayList<Post>();
     }
 
     public Post getSelectedPost() {
@@ -172,7 +172,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setCurrentGroupDiscussion(List<Post> currentGroupDiscussion) {
         this.currentGroupDiscussion = currentGroupDiscussion;
     }
-    
+
     public Group getCurrentGroup() {
         return currentGroup;
     }
@@ -180,7 +180,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setCurrentGroup(Group currentGroup) {
         this.currentGroup = currentGroup;
     }
-    
+
     public String getSelectedAnswer() {
         return selectedAnswer;
     }
@@ -188,6 +188,7 @@ public class PortionBean implements Serializable, ActionListener {
     public void setSelectedAnswer(String selectedAnswer) {
         this.selectedAnswer = selectedAnswer;
     }
+
     public Question getCurrentQuestion() {
         return currentQuestion;
     }
@@ -243,14 +244,14 @@ public class PortionBean implements Serializable, ActionListener {
     public void setOption_e(String option_e) {
         this.option_e = option_e;
     }
-    
+
     public void onTabChange(TabChangeEvent event) {
         System.out.println("ON TAB CHANGE EVENT");
-        
-        System.out.println("AssignmentID: " + ((StudentAssignmentMenuBean.MenuTab)event.getData()).getAssignment().getAssignment_id());
+
+        System.out.println("AssignmentID: " + ((StudentAssignmentMenuBean.MenuTab) event.getData()).getAssignment().getAssignment_id());
         System.out.println();
-        this.selectedAssignment = ((StudentAssignmentMenuBean.MenuTab)event.getData()).getAssignment();
-        
+        this.selectedAssignment = ((StudentAssignmentMenuBean.MenuTab) event.getData()).getAssignment();
+
         this.assignment_name = this.selectedAssignment.getAssignment_name();
         this.assignment_descr = this.selectedAssignment.getAssignment_descr();
         this.indivdual_start_date = this.selectedAssignment.getIndividual_start_date();
@@ -259,13 +260,13 @@ public class PortionBean implements Serializable, ActionListener {
         this.BP_end_date = this.selectedAssignment.getBP_end_date();
         this.MP_start_date = this.selectedAssignment.getMP_start_date();
         this.MP_end_date = this.selectedAssignment.getMP_end_date();
-    
+
         showAssignment = true;
         showQuestion = false;
         clearSelection();
     }
-    
-    private void clearSelection(){
+
+    private void clearSelection() {
         System.out.println("CLEARING GROUP SELECTION!");
         this.currentQuestion = null;
         this.selectedAnswer = null;
@@ -279,38 +280,37 @@ public class PortionBean implements Serializable, ActionListener {
         this.currentGroupDiscussion = null;
         this.studentPost = "";
     }
-    
+
     @Override
-    public void processAction(ActionEvent ae) throws AbortProcessingException 
-    {
-        
-                clearSelection();
-                CommandLink itm = (CommandLink)ae.getSource();
-                String menu_name = itm.getValue().toString();
-                this.currentQuestion = (Question)itm.getValue();
-                this.option_a = currentQuestion.getOption_a();
-                this.option_b = currentQuestion.getOption_b();
-                this.option_c = currentQuestion.getOption_c();
-                this.option_d = currentQuestion.getOption_d();
-                this.option_e = currentQuestion.getOption_e();
-                this.question = currentQuestion.getQuestion();
-                System.out.println(">>> Current Question: " + this.option_a);
-                System.out.println("GROUPSELECTEDBEAN: processAction occurred!!!!");
-                this.showAssignment = false;
-                this.showQuestion = true;
-                
+    public void processAction(ActionEvent ae) throws AbortProcessingException {
+
+        clearSelection();
+        CommandLink itm = (CommandLink) ae.getSource();
+        String menu_name = itm.getValue().toString();
+        this.currentQuestion = (Question) itm.getValue();
+        this.option_a = currentQuestion.getOption_a();
+        this.option_b = currentQuestion.getOption_b();
+        this.option_c = currentQuestion.getOption_c();
+        this.option_d = currentQuestion.getOption_d();
+        this.option_e = currentQuestion.getOption_e();
+        this.question = currentQuestion.getQuestion();
+        System.out.println(">>> Current Question: " + this.option_a);
+        System.out.println("GROUPSELECTEDBEAN: processAction occurred!!!!");
+        this.showAssignment = false;
+        this.showQuestion = true;
+
     }
-    
-    public boolean studentSubmitPost(){
-        
+
+    public boolean studentSubmitPost() {
+
         System.out.println("Portion Bean: Submitting Post");
-        if(this.studentPost.length() > 0){
+        if (this.studentPost.length() > 0) {
             System.out.println("User: " + LoginBean.user.getF_name());
             System.out.println("Post: " + this.studentPost);
             System.out.println("Group: " + this.currentGroup);
             System.out.println();
-            
-            Post toSubmit = new Post(this.studentPost, new Timestamp(System.currentTimeMillis()), currentQuestion.isIs_mp_question(), currentQuestion.isIs_bp_question(), summaryBit, LoginBean.user.getUser_id(),this.currentGroup.getGroup_id());
+
+            Post toSubmit = new Post(this.studentPost, new Timestamp(System.currentTimeMillis()), currentQuestion.isIs_mp_question(), currentQuestion.isIs_bp_question(), summaryBit, LoginBean.user.getUser_id(), this.currentGroup.getGroup_id());
             PostDAO.insertPost(toSubmit);
             this.currentGroupDiscussion = PostDAO.getPostByGroupId(currentGroup.getGroup_id());
             this.studentPost = "";
@@ -319,60 +319,66 @@ public class PortionBean implements Serializable, ActionListener {
         }
         return false;
     }
-    
-    public void submitAnswer(ActionEvent ae)  {
-        
+
+    public void submitAnswer(ActionEvent ae) {
+
         System.out.println("PORTION BEAN: SUBMITANSWER: Selected answer: " + this.selectedAnswer);
-        
+
         System.out.println(LoginBean.user.getUser_id());
-        
-        AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id());
-        
+
+        Assignment a = AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id());
+
         //System.out.println(AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id()).getAssignment_id());
         System.out.println(currentQuestion.getQuestion_id());
         System.out.println(selectedAnswer.charAt(0));
-        
-        MCResponse m = new MCResponse(LoginBean.user.getUser_id(), 
-                AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id()).getAssignment_id(), 
-                currentQuestion.getQuestion_id(), 
+
+        MCResponse m = new MCResponse(LoginBean.user.getUser_id(),
+                a.getAssignment_id(),
+                currentQuestion.getQuestion_id(),
                 selectedAnswer.charAt(0));
-        
-        //if response is in database, update. If not, insert. In the future, remove update, and replace with error.
-        
-        
-        MCResponseDAO.updateMCResponse(m);
-        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Your choice has been submitted.", "Successful Submission!!")); 
-        
+
+        /* check to see if student can submit/update their answer */
+        Date now = new Date(System.currentTimeMillis());
+        Date due = a.getIndividual_end_date();
+        if (now.before(due)) {
+            if (MCResponseDAO.hasResponded(AssignmentDAO.getAssignmentByQuestion(currentQuestion.getQuestion_id()).getAssignment_id(), currentQuestion.getQuestion_id(), LoginBean.user.getUser_id())) {
+                MCResponseDAO.updateMCResponse(m);
+            } else {
+                MCResponseDAO.insertMCResponse(m);
+            }
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Your choice has been submitted.", "Successful Submission!!"));
+
     }
-    
+
     public boolean renderIndiv() {
-        if(currentQuestion == null) {
+        if (currentQuestion == null) {
             return false;
         }
         System.out.println("RENDER INDIV! Result is: " + (!currentQuestion.isIs_bp_question() && !currentQuestion.isIs_mp_question()));
-        if(!currentQuestion.isIs_bp_question() && !currentQuestion.isIs_mp_question()) {
-            this.currentGroup=null;
+        if (!currentQuestion.isIs_bp_question() && !currentQuestion.isIs_mp_question()) {
+            this.currentGroup = null;
             return true;
-        } 
-            return false;
+        }
+        return false;
     }
-    
+
     public boolean renderBP() {
         System.out.println("PortionBean: RenderBP: " + currentQuestion);
-        if(currentQuestion == null) {
+        if (currentQuestion == null) {
             return false;
         }
         System.out.println("PortionBean: RenderBP: CurrentQuestion ID: " + currentQuestion.getQuestion_id());
         System.out.println("PortionBean: PRENDER BP! Result is: " + (currentQuestion.isIs_bp_question()));
-        if(currentQuestion.isIs_bp_question()) {
-            
-            if(GroupDAO.isUserInGroup(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id())) {
+        if (currentQuestion.isIs_bp_question()) {
+
+            if (GroupDAO.isUserInGroup(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id())) {
                 System.out.println("PortionBean: Passed Check");
                 this.currentGroup = GroupDAO.getGroupByUserAndAssignment(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id());
                 this.currentGroupDiscussion = PostDAO.getBpPostInGroup(currentGroup.getGroup_id());
                 System.out.println(">>> Current Group: " + this.currentGroup.getGroup_id());
-                
+
             } else {
                 return false;
             }
@@ -380,26 +386,26 @@ public class PortionBean implements Serializable, ActionListener {
         }
         return false;
     }
-    
+
     public boolean renderMP() {
         System.out.println("PortionBean: RenderMP: " + currentQuestion);
-         if(currentQuestion == null) {
+        if (currentQuestion == null) {
             return false;
         }
         System.out.println("PortionBean: RenderMP: CurrentQuestion ID: " + currentQuestion.getQuestion_id());
-        if(currentQuestion.isIs_mp_question()) {
-            
-            if(GroupDAO.isUserInGroup(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id())) {
+        if (currentQuestion.isIs_mp_question()) {
+
+            if (GroupDAO.isUserInGroup(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id())) {
                 System.out.println("PortionBean: RenderMP: IsUserInGroup == true");
                 this.currentGroup = GroupDAO.getGroupByUserAndAssignment(LoginBean.user.getUser_id(), AssignmentDAO.getAssignmentByQuestion(this.currentQuestion.getQuestion_id()).getAssignment_id());
                 this.currentGroupDiscussion = PostDAO.getMpPostInGroup(currentGroup.getGroup_id());
                 System.out.println(">>> Current Group: " + this.currentGroup.getGroup_id());
-                
+
             } else {
                 return false;
             }
             return true;
-        } 
+        }
         return false;
     }
 }
