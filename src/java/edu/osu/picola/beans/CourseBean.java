@@ -40,6 +40,6 @@ public class CourseBean {
     }
 
     public List<Assignment> getAssignments() {
-        return AssignmentDAO.getAssignmentByCourse(courseId);
+        return AssignmentDAO.getAssignmentsByCourse(courseId);
     }
 }

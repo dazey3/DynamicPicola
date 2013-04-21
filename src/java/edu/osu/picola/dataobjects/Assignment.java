@@ -65,12 +65,13 @@ public class Assignment implements Serializable {
         this.user_id = user_id;
         this.course_id = course_id;
         this.assignment_number = assignment_number;
+        this.assignment_name = assignment_name;
     }
 
     public int getAssignment_number() {
         return assignment_number;
-    }
-
+    }  
+    
     public void setAssignment_number(int assignment_number) {
         this.assignment_number = assignment_number;
     }

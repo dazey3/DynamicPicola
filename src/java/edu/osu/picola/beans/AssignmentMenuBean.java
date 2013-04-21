@@ -6,6 +6,7 @@ import edu.osu.picola.dao.GroupDAO;
 import edu.osu.picola.dao.UserDAO;
 import edu.osu.picola.dataobjects.Assignment;
 import edu.osu.picola.dataobjects.Course;
+
 import edu.osu.picola.dataobjects.Group;
 import edu.osu.picola.dataobjects.User;
 import java.io.Serializable;
@@ -84,7 +85,7 @@ public class AssignmentMenuBean implements Serializable {
         menus = new ArrayList<MenuTab>();
         System.out.println(selectedCourse);
         System.out.println(selectedCourse.getCourse_title());
-        List<Assignment> assignments = AssignmentDAO.getAssignmentByCourse(selectedCourse.getCourse_id());
+        List<Assignment> assignments = AssignmentDAO.getAssignmentsByCourse(selectedCourse.getCourse_id());
         System.out.println("GOT HERE 2!");
         for(int assignment_count = 0; assignment_count < assignments.size(); assignment_count++){
                System.out.println("Assignment: " + assignments.get(assignment_count).getAssignment_id());

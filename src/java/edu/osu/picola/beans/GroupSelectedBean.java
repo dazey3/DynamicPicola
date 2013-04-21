@@ -98,6 +98,14 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     private String mpQuestionDesc;
     private Assignment selectedAssignment;
 
+    public Assignment getSelectedAssignment() {
+        return selectedAssignment;
+    }
+
+    public void setSelectedAssignment(Assignment selectedAssignment) {
+        this.selectedAssignment = selectedAssignment;
+    }
+    
     public String getAssignment_name() {
         return assignment_name;
     }
@@ -235,13 +243,6 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         this.assignmentSelection = assignmentSelection;
     }
 */       
-    public void showAssignment(){
-        
-    }
-    
-    public void showGroup(){
-       
-    }
     
     public void changeFlag(Post post){
         System.out.println("Current Post Flag: " + post.getPost_isflaged());
@@ -251,6 +252,11 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     public void createGroups(ActionEvent ae){
         System.out.println("GroupSelectedBean: createGroups");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Created Groups!"));
+    }
+    
+    public void deleteAssignment(ActionEvent ae){
+        System.out.println("GroupSelectedBean: deleteAssignment: " + this.selectedAssignment);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Deleted Assignment!"));
     }
     
     public void removePost(ActionEvent ae){
@@ -276,6 +282,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         List<Question> bps = QuestionDAO.getBPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
         List<Question> mps = QuestionDAO.getMPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
         
+        this.selectedAssignment.setAssignment_name(this.assignment_name);
         this.selectedAssignment.setAssignment_descr(this.assignment_descr);
         this.selectedAssignment.setIndividual_start_date(new Timestamp(this.indivdual_start_date.getTime()));
         this.selectedAssignment.setIndividual_end_date(new Timestamp(this.indivdual_end_date.getTime()));
@@ -284,33 +291,12 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         this.selectedAssignment.setMP_start_date(new Timestamp(this.MP_start_date.getTime()));
         this.selectedAssignment.setMP_end_date(new Timestamp(this.MP_end_date.getTime()));
         
-        
-        String answer = "";
-        
-        switch(this.multiple_choice_answer.charAt(0)){
-            case 'a':
-                answer = this.option_a;
-                break;
-            case 'b':
-                answer = this.option_b;
-                break;
-            case 'c':
-                answer = this.option_c;
-                break;
-            case 'd':
-                answer = this.option_d;
-                break;
-            case 'e':
-                answer = this.option_e;
-                break;
-        }
-        
         init.setOption_a(this.option_a);
         init.setOption_b(this.option_b);
         init.setOption_c(this.option_c);
         init.setOption_d(this.option_d);
         init.setOption_e(this.option_e);
-        init.setMultiple_choice_answer(answer);
+        init.setMultiple_choice_answer(this.multiple_choice_answer);
         init.setAnswer_to_question_explanation(this.answer_to_question_explanation);
         init.setQuestion(this.initquestion);
         
@@ -338,7 +324,8 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println();
         this.selectedAssignment = ((MenuTab)event.getData()).getAssignment();
         
-        
+        this.assignment_id = this.selectedAssignment.getAssignment_id();
+        this.assignment_name = this.selectedAssignment.getAssignment_name();
         this.assignment_descr = this.selectedAssignment.getAssignment_descr();
         this.indivdual_start_date = this.selectedAssignment.getIndividual_start_date();
         this.indivdual_end_date = this.selectedAssignment.getIndividual_end_date();
@@ -355,7 +342,9 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println("Number of MP Questions: " + mp.size());
         
         if(init != null){
+            
             this.initquestion = init.getQuestion();
+            System.out.println("Initial Question: " + this.initquestion);
             this.answer_to_question_explanation = init.getAnswer_to_question_explanation();
             this.multiple_choice_answer = init.getMultiple_choice_answer();
             this.option_a = init.getOption_a();
@@ -364,15 +353,32 @@ public class GroupSelectedBean implements Serializable, ActionListener{
             this.option_d = init.getOption_d();
             this.option_e = init.getOption_e();
         }
+        else{
+            this.initquestion = "";
+            this.multiple_choice_answer = "";
+            this.option_a = "";
+            this.option_b = "";
+            this.option_c = "";
+            this.option_d = "";
+            this.option_e = "";
+        }
         
     
         if(bp.size()>0){
             this.bpQuestion = bp.get(0).getQuestion();
             this.bpQuestionDesc = bp.get(0).getAnswer_to_question_explanation();
         }
+        else{
+            this.bpQuestion = "";
+            this.bpQuestionDesc = "";
+        }
         if(mp.size()>0){
             this.mpQuestion = mp.get(0).getQuestion();
             this.mpQuestionDesc = mp.get(0).getAnswer_to_question_explanation();
+        }
+        else{
+            this.mpQuestion = "";
+            this.mpQuestionDesc = "";
         }
         
         this.assignmentShow = true;
@@ -394,7 +400,7 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println("GROUP SELECTED: " + selection);
     }
     
-    private void clearSelection(){
+    public void clearSelection(){
         System.out.println("CLEARING GROUP SELECTION!");
         this.selection = null;
         this.currentGroupDiscussion = new ArrayList<Post>();

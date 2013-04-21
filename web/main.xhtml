@@ -31,7 +31,7 @@
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>
-        
+
         <h:panelGroup id="hello">
             <ui:fragment rendered="#{loginBean.isUserLoggedIn()}">
                 <div class="well well-small" id="subBackGround">
@@ -40,7 +40,9 @@
                             <h:outputText style="font-weight:bold; font-size: 20px;" value="SELECT CLASS:" />
                             <p:selectOneMenu value="#{assignmentMenuBean.selectedCourse}">
                                 <f:selectItems value="#{assignmentMenuBean.courses}"/>
-                                <p:ajax update=":tabABCD , :tabABCD:accordionOfAssignments , :tabABCD:rosterForm , :tabABCD:postAssignmentForm" event="change" listener="#{assignmentMenuBean.updateModel()}" />
+                                <f:ajax listener="#{groupSelectedBean.clearSelection()}"/>
+                                <p:ajax update=":tabABCD:test , :tabABCD:accordionOfAssignments , :tabABCD:rosterForm , :tabABCD:postAssignmentForm" event="change"  listener="#{assignmentMenuBean.updateModel()}"  />
+                                
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </h:form>
@@ -66,9 +68,10 @@
                                     </p:layoutUnit>
                                     <p:layoutUnit position="center">
                                         <h:panelGroup id ="test" >
-                                            <h:form id="centerGroupForm" rendered="#{groupSelectedBean.groupShow}">
+
+                                            <h:form  id="centerGroupForm" rendered="#{groupSelectedBean.groupShow}">
                                                 <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
-                                                
+
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
                                                 <h:panelGrid columns="#{groupSelectedBean.selection.size()}">
                                                     <ui:repeat value ="#{groupSelectedBean.selection}" var ="user">
@@ -91,7 +94,7 @@
                                                             <p:selectBooleanCheckbox disabled="true" value="#{post.summary_bit}"/>
                                                         </p:column>
                                                         <p:column headerText="Delete">
-                                                            <p:commandButton oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
+                                                            <p:commandButton update=":deleteDlg" oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
                                                                 <f:setPropertyActionListener value="#{post}" target="#{groupSelectedBean.selectedPost}" />
                                                             </p:commandButton>
                                                         </p:column>
@@ -104,11 +107,10 @@
                                                     <p:commandButton update=":tabABCD:centerGroupForm" type="submit" value="Post" actionListener="#{groupSelectedBean.instructorSubmitPost()}"/>
                                                 </h:panelGrid>
 
-
                                             </h:form>
                                             <h:form id="updateAssignmentForm" rendered="#{groupSelectedBean.assignmentShow}">
                                                 <p:messages id="successMessage" showDetail="true" autoUpdate="true" closable="true" />
-                                                <h:outputText style="font-weight:bold; font-size: 20px;" value="Assignment #{groupSelectedBean.assignment_id}:"/>
+                                                <h:outputText style="font-weight:bold; font-size: 20px;" value="Assignment #{groupSelectedBean.selectedAssignment.assignment_number}:"/>
                                                 <h:panelGrid columns="1">
                                                     <h:outputText style="font-weight:bold;" value="Assignment Name:"/>
                                                     <h:inputText value="#{groupSelectedBean.assignment_name}"/>
@@ -146,24 +148,28 @@
                                                 <h:panelGroup>
                                                     <h:panelGrid columns="1">
                                                         <h:panelGrid columns="1">
-                                                            <h:outputText value="Description: "/>
+                                                            <h:outputText style="font-weight:bold;" value="Description: "/>
                                                             <p:inputTextarea value="#{groupSelectedBean.assignment_descr}" rows="3" cols="80" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                         </h:panelGrid>
                                                     </h:panelGrid>
+
                                                     <p:tabView>
                                                         <p:tab id="initialQuestionTab" title="Intial Question">
-                                                            <h:panelGrid columns="2">
-                                                                <h:panelGroup>
+                                                            <h:panelGrid columns="1">
+                                                                <h:panelGrid columns="2">
                                                                     <h:panelGrid columns="1">
                                                                         <h:outputText style="font-weight:bold;" value="Question: "/>
                                                                         <p:inputTextarea value="#{groupSelectedBean.initquestion}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
-                                                                        <h:outputText/>
+                                                                    </h:panelGrid> 
+                                                                    <h:panelGrid columns="1">
+                                                                        <h:outputLabel style="font-weight:bold;" value="Explaination: " />
+                                                                        <p:inputTextarea value="#{groupSelectedBean.answer_to_question_explanation}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                                     </h:panelGrid>
-                                                                </h:panelGroup>
+                                                                </h:panelGrid>
 
                                                                 <h:panelGroup>
                                                                     <h:outputText style="font-weight:bold;" value="Answers: "/>
-                                                                    <p:selectOneRadio required="true" requiredMessage="Must Select An Answer" id="customRadio" value="#{groupSelectedBean.multiple_choice_answer}" layout="custom">  
+                                                                    <p:selectOneRadio id="customRadio" value="#{groupSelectedBean.multiple_choice_answer}" layout="custom">  
                                                                         <f:selectItem itemLabel="Option 1" itemValue="a" />  
                                                                         <f:selectItem itemLabel="Option 2" itemValue="b" />  
                                                                         <f:selectItem itemLabel="Option 3" itemValue="c" />  
@@ -171,30 +177,28 @@
                                                                         <f:selectItem itemLabel="Option 5" itemValue="e" />
                                                                     </p:selectOneRadio>
                                                                     <h:panelGrid columns="3">  
-                                                                        <h:outputLabel for="opt1" value="Question 1:" />
+                                                                        <h:outputLabel for="opt1" value="Option 1:" />
                                                                         <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>      
-                                                                        <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{groupSelectedBean.option_a}"/>
+                                                                        <h:inputText value ="#{groupSelectedBean.option_a}"/>
 
-                                                                        <h:outputLabel for="opt2" value="Question 2:" /> 
+                                                                        <h:outputLabel for="opt2" value="Option 2:" /> 
                                                                         <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
-                                                                        <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{groupSelectedBean.option_b}"/>
+                                                                        <h:inputText value ="#{groupSelectedBean.option_b}"/>
 
-                                                                        <h:outputLabel for="opt3" value="Question 3:" />
+                                                                        <h:outputLabel for="opt3" value="Option 3:" />
                                                                         <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
-                                                                        <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{groupSelectedBean.option_c}"/>
+                                                                        <h:inputText value ="#{groupSelectedBean.option_c}"/>
 
-                                                                        <h:outputLabel for="opt4" value="Question 4:" />
+                                                                        <h:outputLabel for="opt4" value="Option 4:" />
                                                                         <p:radioButton id="opt4" for="customRadio" itemIndex="3"/>  
-                                                                        <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{groupSelectedBean.option_d}"/>
-                                                                        
-                                                                        <h:outputLabel for="opt5" value="Question 5:" />
+                                                                        <h:inputText value ="#{groupSelectedBean.option_d}"/>
+
+                                                                        <h:outputLabel for="opt5" value="Option 5:" />
                                                                         <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
-                                                                        <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{groupSelectedBean.option_e}"/>
+                                                                        <h:inputText value ="#{groupSelectedBean.option_e}"/>
                                                                     </h:panelGrid> 
                                                                 </h:panelGroup>
                                                             </h:panelGrid>
-                                                            <h:outputLabel value="Explaination: " />
-                                                            <p:inputTextarea value="#{groupSelectedBean.answer_to_question_explanation}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                         </p:tab>
                                                         <p:tab id="bpQuestionTab" title="BP Question">
                                                             <h:panelGrid columns="2">
@@ -225,35 +229,31 @@
                                                 <h:panelGrid columns="3">
                                                     <p:commandButton type="submit" update=":tabABCD:updateAssignmentForm" value="Save Changes" actionListener="#{groupSelectedBean.updateAssignment}"/>
                                                     <p:commandButton value="Create Groups" actionListener="#{groupSelectedBean.createGroups}"/>
+                                                    <p:commandButton value="Delete Assignment" actionListener="#{groupSelectedBean.deleteAssignment}" />
                                                 </h:panelGrid>
                                             </h:form>
                                         </h:panelGroup>
                                     </p:layoutUnit>
                                 </p:layout>
-                                <h:form>
-                                    <p:dialog header="Delete Post?" widgetVar="deleteDialog" resizable="false" id="deleteDlg"
-                                              showEffect="fade" modal="true">
-                                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
-                                            <h:outputText value="Name:" />
-                                            <h:outputText value="#{groupSelectedBean.selectedPost}" style="font-weight:bold"/>
-                                            <p:commandButton title ="Delete" id="confirm" value="Delete" actionListener="#{groupSelectedBean.removePost}" oncomplete="deleteDialog.hide()" 
-                                                             update=":tabABCD:test"/>
-                                            <p:commandButton id="cancelButton" onclick="deleteDialog.hide();" value="Not Now"/>
-                                        </h:panelGrid>
-                                    </p:dialog>
-                                </h:form>
+
+
+
+
+
+
                             </p:tab>
                             <p:tab id="tab2" title="Roster">
                                 <h:form id="rosterForm">
                                     <p:dataList value="#{assignmentMenuBean.getUsers()}" var="student" id="students" paginator="true" rows="5" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" type="none">  
                                         <f:facet name="header">Students</f:facet>  
-
                                         <p:commandLink value="#{student}" update=":tabABCD:profileDialog" actionListener="#{viewProfileBean.processAction}" style="margin-left:10px"  onclick="dlg.show();" />
                                         <br/>  
                                     </p:dataList> 
-                                </h:form>
+                                </h:form>     
+
                                 <p:dialog id="dialog" header="Student Profile" widgetVar="dlg" showEffect="clip" hideEffect="clip" modal="true">
                                     <h:form id ="profileDialog">
+
                                         <h:panelGrid columns="1">
                                             <h:panelGrid columns="2">
                                                 <h:graphicImage value="#{viewProfileBean.picLink}" />
@@ -285,16 +285,24 @@
                                                 </p:dataTable>
                                             </h:panelGrid>
                                         </h:panelGrid>
-                                    </h:form>
+
+                                    </h:form> 
                                 </p:dialog>
                             </p:tab>
                             <p:tab id="tab3" title="Post Assignment">
                                 <h:form id="postAssignmentForm">
+                                    <p:messages id="createMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                    <h:panelGrid columns="1">
+                                        <h:outputText style="font-weight:bold;" value="Assignment Name:"/>
+                                        <h:inputText value="#{createAssignmentBean.assignment_name}"/>
+                                    </h:panelGrid>
                                     <h:panelGrid columns="3">
                                         <h:panelGroup>
                                             <h:outputText style="font-weight:bold;" value="Assignment Date:"/>
                                             <h:panelGrid columns="2">
+                                                <h:outputText value="Start:"/>
                                                 <p:calendar  value="#{createAssignmentBean.indivdual_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal1" />
+                                                <h:outputText value="End:"/>
                                                 <p:calendar value="#{createAssignmentBean.indivdual_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal2" />
                                             </h:panelGrid>
                                         </h:panelGroup>
@@ -302,7 +310,9 @@
                                         <h:panelGroup>
                                             <h:outputText style="font-weight:bold;" value="Assignment BP:"/>
                                             <h:panelGrid columns="2" cellpadding="30" >
+                                                <h:outputText value="Start:"/>
                                                 <p:calendar value="#{createAssignmentBean.BP_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal3" />
+                                                <h:outputText value="End:"/>
                                                 <p:calendar value="#{createAssignmentBean.BP_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal4" />
                                             </h:panelGrid>
                                         </h:panelGroup>
@@ -310,7 +320,9 @@
                                         <h:panelGroup>
                                             <h:outputText style="font-weight:bold;" value="Assignment MP:"/>
                                             <h:panelGrid columns="2">
+                                                <h:outputText value="Start:"/>
                                                 <p:calendar value="#{createAssignmentBean.MP_start_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal5" />
+                                                <h:outputText value="End:"/>
                                                 <p:calendar value="#{createAssignmentBean.MP_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal6" />
                                             </h:panelGrid>
                                         </h:panelGroup>
@@ -318,25 +330,22 @@
 
                                     <h:panelGroup>
                                         <h:panelGrid columns="1">
-                                            <h:panelGrid columns="1">
-                                                <h:outputText value="Assignment Number: "/>
-                                                <p:inputText value="#{createAssignmentBean.assignment_number}"/>
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="1">
-                                                <h:outputText value="Description: "/>
-                                                <p:inputTextarea value="#{createAssignmentBean.assignment_descr}" rows="3" cols="40" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
-                                            </h:panelGrid>
+                                            <h:outputText value="Description: "/>
+                                            <p:inputTextarea value="#{createAssignmentBean.assignment_descr}" rows="3" cols="40" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                         </h:panelGrid>
                                         <p:tabView>
                                             <p:tab id="initialQuestionTab" title="Intial Question">
-                                                <h:panelGrid columns="2">
-                                                    <h:panelGroup>
+                                                <h:panelGrid columns="1">
+                                                    <h:panelGrid columns="2">
                                                         <h:panelGrid columns="1">
                                                             <h:outputText style="font-weight:bold;" value="Question: "/>
                                                             <p:inputTextarea value="#{createAssignmentBean.initquestion}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
-                                                            <h:outputText/>
                                                         </h:panelGrid>
-                                                    </h:panelGroup>
+                                                        <h:panelGrid columns="1">
+                                                            <h:outputLabel value="Explaination: " />
+                                                            <p:inputTextarea value="#{createAssignmentBean.answer_to_question_explanation}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
+                                                        </h:panelGrid>
+                                                    </h:panelGrid>
 
                                                     <h:panelGroup>
                                                         <h:outputText style="font-weight:bold;" value="Answers: "/>
@@ -348,31 +357,28 @@
                                                             <f:selectItem itemLabel="Option 5" itemValue="e" /> 
                                                         </p:selectOneRadio>
                                                         <h:panelGrid columns="3">  
-                                                            <h:outputLabel for="opt1" value="Question 1:" />
+                                                            <h:outputLabel for="opt1" value="Option 1:" />
                                                             <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>      
                                                             <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{createAssignmentBean.option_a}"/>
 
-                                                            <h:outputLabel for="opt2" value="Question 2:" /> 
+                                                            <h:outputLabel for="opt2" value="Option 2:" /> 
                                                             <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
                                                             <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{createAssignmentBean.option_b}"/>
 
-                                                            <h:outputLabel for="opt3" value="Question 3:" />
+                                                            <h:outputLabel for="opt3" value="Option 3:" />
                                                             <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
                                                             <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{createAssignmentBean.option_c}"/>
 
-                                                            <h:outputLabel for="opt4" value="Question 4:" />
+                                                            <h:outputLabel for="opt4" value="Option 4:" />
                                                             <p:radioButton id="opt4" for="customRadio" itemIndex="3"/>  
                                                             <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{createAssignmentBean.option_d}"/>
 
-                                                            <h:outputLabel for="opt5" value="Question 5:" />
+                                                            <h:outputLabel for="opt5" value="Option 5:" />
                                                             <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
                                                             <h:inputText required="true" requiredMessage="Questions Must Have Answers" value ="#{createAssignmentBean.option_e}"/>
                                                         </h:panelGrid> 
                                                     </h:panelGroup>
                                                 </h:panelGrid>
-                                                <h:outputLabel value="Explaination: " />
-                                                <p:inputTextarea value="#{createAssignmentBean.answer_to_question_explanation}" rows="5" cols="50" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
-
                                             </p:tab>
                                             <p:tab id="bpQuestionTab" title="BP Question">
 
@@ -389,7 +395,6 @@
 
                                             </p:tab>
                                             <p:tab id="mpQuestionTab" title="MP Question">
-
                                                 <h:panelGrid columns="2">
                                                     <h:panelGrid columns="1">
                                                         <h:outputText value="Input MP Question: "/>
@@ -408,6 +413,10 @@
                                 </h:form>
                             </p:tab>
                         </p:tabView>
+                        <p:confirmDialog widgetVar="deleteDialog" id="deleteDlg" message="Delete Post?">
+                            <p:commandButton title ="Delete" id="confirm" value="Delete" update=":tabABCD:centerGroupForm" actionListener="#{groupSelectedBean.removePost}" oncomplete="deleteDialog.hide()" />
+                            <p:commandButton id="decline" onclick="deleteDialog.hide()" value="Not Now"/>
+                        </p:confirmDialog>
                     </h:panelGroup>
                 </div>
             </ui:fragment>

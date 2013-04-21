@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.osu.picola.dataobjects.MCResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MCResponseDAO extends DAO {
 
@@ -41,6 +43,20 @@ public class MCResponseDAO extends DAO {
 
 	}
 
+        public static boolean hasResponded(int assignment_id,int question_id, int user_id) {
+            boolean hasResponded = false;
+            String query = "SELECT * FROM question_response WHERE assignment_id='"+assignment_id+
+                    "' AND question_id='"+question_id+"' AND user_id='"+user_id+"'";
+        try {
+            hasResponded = queryDB(query).next();
+        } catch (SQLException ex) {
+            Logger.getLogger(MCResponseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return hasResponded;
+        
+        }
+        
+        
         public static List<MCResponse> getClassResponses(int assignment_id, int question_id) {
             String query = "SELECT * FROM Question_response WHERE assignment_id='"
                     +assignment_id+ "' AND question_id='"+question_id+"'";

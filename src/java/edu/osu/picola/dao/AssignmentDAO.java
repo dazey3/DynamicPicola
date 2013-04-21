@@ -28,25 +28,11 @@ public class AssignmentDAO extends DAO {
         return loadAssignments(queryDB(query)).get(0);
     }
 
-    //TODO: Get assignment by group_id once group table is fixed
-    //Note: I can't make this join until the groups have an
-    // assignment linked to them through a foreign key.
-    /**
-     * @param group_id of the group you want
-     * @return list of all assignments for a single course
-     */
-    /*
-     * public List<Assignment> getAssignmentByGroup (int group_id) { String
-     * query = "SELECT * FROM group ga INNER JOIN " + "assignment a ON
-     * ga.group_id=a.group_id " + "WHERE ca.course_id='" + course_id + "'";
-     * ResultSet rs = queryDB(query); return loadAssignments(rs);
-	}
-     */
     /**
      * @param user_id of the user you want (including non-students)
      * @return list of all assignments for a user
      */
-    public static List<Assignment> getAssignmentByUser(int user_id) {
+    public static List<Assignment> getAssignmentsByUser(int user_id) {
         String query = "SELECT * FROM assignment "
                 + "WHERE user_id='" + user_id + "'";
         ResultSet rs = queryDB(query);
@@ -57,7 +43,7 @@ public class AssignmentDAO extends DAO {
      * @param course_id of the course you want
      * @return list of all assignments for a single course
      */
-    public static List<Assignment> getAssignmentByCourse(int course_id) {
+    public static List<Assignment> getAssignmentsByCourse(int course_id) {
         String query = "SELECT * FROM assignment a INNER JOIN course c on a.course_id=c.course_id "
                 + "WHERE c.course_id='" + course_id + "'";
         ResultSet rs = queryDB(query);
@@ -112,10 +98,11 @@ public class AssignmentDAO extends DAO {
             Logger.getLogger(AssignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        as.setAssignment_number(assignment_number);
 
         String insert = "INSERT INTO assignment (assignment_descr,individual_start_date, "
                 + "individual_end_date,BP_start_date, BP_end_date, MP_start_date, "
-                + "MP_end_date,user_id, course_id, assignment_number)"
+                + "MP_end_date,user_id, course_id, assignment_number,assignment_name)"
                 + " VALUES('"
                 + as.getAssignment_descr()
                 + "', '"
@@ -128,14 +115,15 @@ public class AssignmentDAO extends DAO {
                 + "', '" + as.getMP_end_date()
                 + "', '" + as.getUser_id()
                 + "', '" + as.getCourse_id()
-                + "', '" + assignment_number
+                + "', '" + as.getAssignment_number()
+                + "', '" + as.getAssignment_name()
                 + "')";
         insertDB(insert);
     }
 
-    public static Assignment getAssignmentByDateAndIds(Timestamp is, int user_id, int course_id) {
-        String query = "SELECT * FROM assignment WHERE user_id = '" + user_id
-                + "' AND course_id='" + course_id + "' AND individual_start_date='" + is + "'";
+    public static Assignment getAssignmentByDateAndIds(int user_id, int course_id, int assignment_number) {
+        String query = "SELECT * FROM assignment WHERE user_id='"+user_id
+                + "' AND course_id='"+ course_id + "' AND assignment_number='"+assignment_number+"'";
         return new Assignment(queryDB(query));
     }
 

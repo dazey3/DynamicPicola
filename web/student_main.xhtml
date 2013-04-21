@@ -46,7 +46,6 @@
 
                     <h:panelGroup>
                         <p:tabView id="tabABCD">
-
                             <p:tab id="hometab" title="Home">
                                 <p:layout style="height: 400px;">
                                     <p:layoutUnit position="center">
@@ -60,11 +59,11 @@
                                     <p:layoutUnit size="300" minSize="200" position="west" resizable="true" collapsible="false" closable="false">
                                         <h:form id="accordionOfAssignments">
                                             <p:accordionPanel activeIndex="null" value="#{studentAssignmentMenuBean.menus}" var="menu" >
-                                                <p:ajax event="tabChange" listener="#{portionBean.tabChangeListener}"/>
+                                                <p:ajax parent="#{menu}" event="tabChange" update=":tabABCD:test" listener="#{portionBean.onTabChange}"/>
                                                 <p:tab title="#{menu.title}">
                                                     <p:dataList value="#{menu.list}" var="a_question">
                                                         <p:column>
-                                                            <p:commandLink value="#{a_question}" update=":tabABCD:Indiv , :tabABCD:BP , :tabABCD:MP" actionListener="#{portionBean.processAction}"/>
+                                                            <p:commandLink value="#{a_question}" update=":tabABCD:test" actionListener="#{portionBean.processAction}"/>
                                                         </p:column>  
                                                     </p:dataList>
                                                 </p:tab>
@@ -72,59 +71,71 @@
                                         </h:form>
                                     </p:layoutUnit>
                                     <p:layoutUnit position="center">
-                                        <h:panelGroup id ="Indiv" >
+                                        <h:panelGroup id="test">
+                                            <h:form id ="assignmentForm" rendered ="#{portionBean.showAssignment}">
+                                                <h:panelGrid columns="2">
+                                                    <h:outputText value="If this value changes then we are changing Assignments"/>
+                                                    <h:outputText value="Assignment #{portionBean.assignment_name}"/>
+                                                </h:panelGrid>
+
+
+                                                <!-- Fill in the form here for what information you want to display for assignment -->
+                                                <!-- Look at the portion bean for all the information fields you have available-->
+
+                                            </h:form>
+
                                             <h:form id="indivForm" rendered="#{portionBean.renderIndiv()}">
 
                                                 <p:messages for ="submitMultChoice" />
-                                                <h:outputText value = "Individual Question:/n 
-                                                              #{portionBean.question}/n"/>
-
-                                                <h:outputText value ="This is an indiv question/n"/>
-
-
-
-                                                <h:outputText style="font-weight:bold;" value="Answers:"/>
-                                                <p:selectOneRadio id="customRadio" value="#{portionBean.selectedAnswer}" layout="custom">  
-                                                    <f:selectItem itemLabel="Option 1" itemValue="a" />  
-                                                    <f:selectItem itemLabel="Option 2" itemValue="b" />  
-                                                    <f:selectItem itemLabel="Option 3" itemValue="c" />  
-                                                    <f:selectItem itemLabel="Option 4" itemValue="d" />
-                                                    <f:selectItem itemLabel="Option 5" itemValue="e" /> 
-                                                </p:selectOneRadio>
-                                                <h:panelGrid columns="2">  
-
-                                                    <h:outputLabel for="opt1" value="#{portionBean.option_a}" />
-                                                    <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
-
-
-                                                    <h:outputLabel for="opt2" value="#{portionBean.option_b}" /> 
-                                                    <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
-
-
-                                                    <h:outputLabel for="opt3" value="#{portionBean.option_c}" />
-                                                    <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
-
-
-                                                    <h:outputLabel for="opt4" value="#{portionBean.option_d}" />
-                                                    <p:radioButton id="opt4" for="customRadio" itemIndex="3"/>  
-
-                                                    <h:outputLabel for="opt5" value="#{portionBean.option_e}" />                                                               
-                                                    <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
-
-
+                                                <h:panelGrid style="margin-bottom: 10px;" columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value = "Individual Question:"/>
+                                                    <h:outputText value = "#{portionBean.question}"/>
                                                 </h:panelGrid>
 
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="Answers:"/>
+
+                                                    <h:panelGroup>
+                                                        <p:selectOneRadio id="customRadio" value="#{portionBean.selectedAnswer}" layout="custom">  
+                                                            <f:selectItem itemLabel="Option 1" itemValue="a" />  
+                                                            <f:selectItem itemLabel="Option 2" itemValue="b" />  
+                                                            <f:selectItem itemLabel="Option 3" itemValue="c" />  
+                                                            <f:selectItem itemLabel="Option 4" itemValue="d" />
+                                                            <f:selectItem itemLabel="Option 5" itemValue="e" /> 
+                                                        </p:selectOneRadio>
+                                                        <h:panelGrid columns="2">  
+
+                                                            <h:outputLabel for="opt1" value="#{portionBean.option_a}" />
+                                                            <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
+
+
+                                                            <h:outputLabel for="opt2" value="#{portionBean.option_b}" /> 
+                                                            <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
+
+
+                                                            <h:outputLabel for="opt3" value="#{portionBean.option_c}" />
+                                                            <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
+
+
+                                                            <h:outputLabel for="opt4" value="#{portionBean.option_d}" />
+                                                            <p:radioButton id="opt4" for="customRadio" itemIndex="3"/>  
+
+                                                            <h:outputLabel for="opt5" value="#{portionBean.option_e}" />                                                               
+                                                            <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
+
+
+                                                        </h:panelGrid>
+                                                    </h:panelGroup>
+                                                </h:panelGrid>
 
                                                 <p:commandButton id="submitMultChoice" type="submit" value="Submit" update="indivForm" actionListener="#{portionBean.submitAnswer}"/>  
 
 
                                             </h:form>
-                                        </h:panelGroup>
-                                        <h:panelGroup id="BP">
                                             <h:form id="bpForm" rendered="#{portionBean.renderBP()}">
 
-                                                <h:outputText value ="BP Question: #{portionBean.question}"></h:outputText>
-
+                                                <h:outputText value ="BP Question:"/>
+                                                <h:outputText value ="#{portionBean.question}"/>
 
                                                 <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
@@ -149,7 +160,7 @@
                                                             <p:selectBooleanCheckbox disabled="true" value="#{post.summary_bit}"/>
                                                         </p:column>
                                                         <p:column headerText="Delete">
-                                                            <p:commandButton oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
+                                                            <p:commandButton disabled="#{post.user_id != loginBean.loggedInUserId}" oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">
                                                                 <f:setPropertyActionListener value="#{post}" target="#{portionBean.selectedPost}" />
                                                             </p:commandButton>
                                                         </p:column>
@@ -161,12 +172,10 @@
                                                     <p:commandButton update=":tabABCD:bpForm" type="submit" value="Post" actionListener="#{portionBean.studentSubmitPost()}"/>
                                                 </h:panelGrid> 
                                             </h:form>
-                                        </h:panelGroup>
-                                        <h:panelGroup id="MP" >
                                             <h:form id="mpForm" rendered="#{portionBean.renderMP()}">
 
                                                 <h:outputText value ="MP Question: #{portionBean.question}"></h:outputText>
-                                                
+
                                                 <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
                                                 <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
                                                 <h:panelGrid columns="#{portionBean.currentGroup.size()}">
@@ -209,6 +218,7 @@
                                                 </h:panelGrid>
                                             </h:form>
                                         </h:panelGroup>
+
                                     </p:layoutUnit>
                                 </p:layout>
                             </p:tab>
@@ -256,9 +266,7 @@
                                         </h:panelGrid>
                                     </h:form>
                                 </p:dialog>
-
                             </p:tab>
-
                         </p:tabView>
                     </h:panelGroup>
                 </div>
