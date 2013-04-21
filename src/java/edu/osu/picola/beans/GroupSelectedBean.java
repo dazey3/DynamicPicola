@@ -261,8 +261,19 @@ public class GroupSelectedBean implements Serializable, ActionListener{
     public void deleteAssignment(ActionEvent ae){
         System.out.println("GroupSelectedBean: deleteAssignment: " + this.selectedAssignment);
         
-        AssignmentDAO.deleteAssignmentByAssignmentId(assignment_id);
+        AssignmentDAO.deleteAssignmentByAssignmentId(this.selectedAssignment.getAssignment_id());
         
+        Question init = QuestionDAO.getInitQuestion(this.selectedAssignment.getAssignment_id());
+        List<Question> bps = QuestionDAO.getBPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
+        List<Question> mps = QuestionDAO.getMPQuestionByAssignment(this.selectedAssignment.getAssignment_id());
+        
+        QuestionDAO.removeQuestionById(init.getQuestion_id());
+        for(Question q: bps){
+            QuestionDAO.removeQuestionById(q.getQuestion_id());
+        }
+        for(Question q: mps){
+            QuestionDAO.removeQuestionById(q.getQuestion_id());
+        }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Complete: ", "Deleted Assignment!"));
     }
     

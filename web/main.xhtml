@@ -229,7 +229,7 @@
                                                 <h:panelGrid columns="3">
                                                     <p:commandButton type="submit" update=":tabABCD:updateAssignmentForm" value="Save Changes" actionListener="#{groupSelectedBean.updateAssignment}"/>
                                                     <p:commandButton value="Create Groups" actionListener="#{groupSelectedBean.createGroups}"/>
-                                                    <p:commandButton value="Delete Assignment" actionListener="#{groupSelectedBean.deleteAssignment}" />
+                                                    <p:commandButton value="Delete Assignment" update=":tabABCD" actionListener="#{groupSelectedBean.deleteAssignment}" />
                                                 </h:panelGrid>
                                             </h:form>
                                         </h:panelGroup>
