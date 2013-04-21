@@ -15,6 +15,7 @@ import edu.osu.picola.dataobjects.Question;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -261,6 +262,8 @@ public class PortionBean implements Serializable, ActionListener {
         this.MP_start_date = this.selectedAssignment.getMP_start_date();
         this.MP_end_date = this.selectedAssignment.getMP_end_date();
 
+        
+        
         showAssignment = true;
         showQuestion = false;
         clearSelection();
