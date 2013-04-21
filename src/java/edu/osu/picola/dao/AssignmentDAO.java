@@ -124,6 +124,7 @@ public class AssignmentDAO extends DAO {
     
     public static void deleteAssignmentByAssignmentId(int assignment_id){
         String query = "DELETE FROM assignment WHERE assignment_id='"+assignment_id + "'";
+        
         deleteRecord(query);
     }
 
