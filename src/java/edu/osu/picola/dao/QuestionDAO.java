@@ -62,6 +62,12 @@ public class QuestionDAO extends DAO {
             
             return null;
         }
+        
+        public static void removeQuestionById(int question_id) {
+        
+        String delete = "DELETE FROM question WHERE question_id='"+question_id+"'";
+        deleteRecord(delete);
+        }
 	/**
 	 * @return all multiple choice questions in the db
 	 */
