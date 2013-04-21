@@ -1,5 +1,6 @@
 package edu.osu.picola.dao;
 
+import static edu.osu.picola.dao.DAO.queryDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -119,6 +120,11 @@ public class AssignmentDAO extends DAO {
                 + "', '" + as.getAssignment_name()
                 + "')";
         insertDB(insert);
+    }
+    
+    public static void deleteAssignmentByAssignmentId(int assignment_id){
+        String query = "DELETE FROM assignment WHERE assignment_id='"+assignment_id + "'";
+        deleteRecord(query);
     }
 
     public static Assignment getAssignmentByDateAndIds(int user_id, int course_id, int assignment_number) {
