@@ -94,7 +94,7 @@ public class StudentAssignmentMenuBean implements Serializable {
         menus = new ArrayList<MenuTab>();
         System.out.println(selectedCourse);
         System.out.println(selectedCourse.getCourse_title());
-        List<Assignment> assignments = AssignmentDAO.getAssignmentByCourse(selectedCourse.getCourse_id());
+        List<Assignment> assignments = AssignmentDAO.getAssignmentsByCourse(selectedCourse.getCourse_id());
         System.out.println("GOT HERE 2!");
         
         for(int assignment_count = 0; assignment_count < assignments.size(); assignment_count++){

@@ -46,7 +46,6 @@
 
                     <h:panelGroup>
                         <p:tabView id="tabABCD">
-
                             <p:tab id="hometab" title="Home">
                                 <p:layout style="height: 400px;">
                                     <p:layoutUnit position="center">
@@ -60,11 +59,11 @@
                                     <p:layoutUnit size="300" minSize="200" position="west" resizable="true" collapsible="false" closable="false">
                                         <h:form id="accordionOfAssignments">
                                             <p:accordionPanel activeIndex="null" value="#{studentAssignmentMenuBean.menus}" var="menu" >
-                                                <p:ajax parent="#{menu}" event="tabChange" update=":tabABCD:test" listener="#{groupSelectedBean.onTabChange}"/>
+                                                <p:ajax parent="#{menu}" event="tabChange" update=":tabABCD:test" listener="#{portionBean.onTabChange}"/>
                                                 <p:tab title="#{menu.title}">
                                                     <p:dataList value="#{menu.list}" var="a_question">
                                                         <p:column>
-                                                            <p:commandLink value="#{a_question}" update=":tabABCD:questionGroup" actionListener="#{portionBean.processAction}"/>
+                                                            <p:commandLink value="#{a_question}" update=":tabABCD:test" actionListener="#{portionBean.processAction}"/>
                                                         </p:column>  
                                                     </p:dataList>
                                                 </p:tab>
@@ -78,7 +77,6 @@
                                                     <h:outputText value="If this value changes then we are changing Assignments"/>
                                                     <h:outputText value="Assignment #{portionBean.assignment_name}"/>
                                                 </h:panelGrid>
-                                               
                                                 
                                                 <!-- Fill in the form here for what information you want to display for assignment -->
                                                 <!-- Look at the portion bean for all the information fields you have available-->
@@ -119,18 +117,14 @@
                                                         <h:outputLabel for="opt5" value="#{portionBean.option_e}" />                                                               
                                                         <p:radioButton id="opt5" for="customRadio" itemIndex="4"/>  
 
-
                                                     </h:panelGrid>
 
-
                                                     <p:commandButton id="submitMultChoice" type="submit" value="Submit" update="indivForm" actionListener="#{portionBean.submitAnswer}"/>  
-
 
                                                 </h:form>
                                                 <h:form id="bpForm" rendered="#{portionBean.renderBP()}">
 
                                                     <h:outputText value ="BP Question: #{portionBean.question}"/>
-
 
                                                     <p:messages id="removedMessage" showDetail="true" autoUpdate="true" closable="true" />
                                                     <h:outputText style="font-weight:bold; font-size: 20px;" value="Group Members:"/>
@@ -261,9 +255,7 @@
                                         </h:panelGrid>
                                     </h:form>
                                 </p:dialog>
-
                             </p:tab>
-
                         </p:tabView>
                     </h:panelGroup>
                 </div>

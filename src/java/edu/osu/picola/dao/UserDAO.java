@@ -290,9 +290,6 @@ public class UserDAO extends DAO {
         
         return badStudents;
     }
-
-    
-    
     
     /**
      * Helper for loading users in to lists

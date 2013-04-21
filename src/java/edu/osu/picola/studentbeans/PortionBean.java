@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.osu.picola.studentbeans;
 
-import edu.osu.picola.beans.AssignmentMenuBean;
+import edu.osu.picola.studentbeans.StudentAssignmentMenuBean;
 import edu.osu.picola.beans.LoginBean;
 import edu.osu.picola.dao.AssignmentDAO;
 import edu.osu.picola.dao.GroupDAO;
@@ -250,9 +247,9 @@ public class PortionBean implements Serializable, ActionListener {
     public void onTabChange(TabChangeEvent event) {
         System.out.println("ON TAB CHANGE EVENT");
         
-        System.out.println("AssignmentID: " + ((AssignmentMenuBean.MenuTab)event.getData()).getAssignment().getAssignment_id());
+        System.out.println("AssignmentID: " + ((StudentAssignmentMenuBean.MenuTab)event.getData()).getAssignment().getAssignment_id());
         System.out.println();
-        this.selectedAssignment = ((AssignmentMenuBean.MenuTab)event.getData()).getAssignment();
+        this.selectedAssignment = ((StudentAssignmentMenuBean.MenuTab)event.getData()).getAssignment();
         
         this.assignment_name = this.selectedAssignment.getAssignment_name();
         this.assignment_descr = this.selectedAssignment.getAssignment_descr();
@@ -301,7 +298,7 @@ public class PortionBean implements Serializable, ActionListener {
                 System.out.println("GROUPSELECTEDBEAN: processAction occurred!!!!");
                 this.showAssignment = false;
                 this.showQuestion = true;
-        
+                
     }
     
     public boolean studentSubmitPost(){

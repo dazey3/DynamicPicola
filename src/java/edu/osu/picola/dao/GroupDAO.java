@@ -30,10 +30,9 @@ public class GroupDAO extends DAO {
         deleteRecord(delete);
     }
 
-  
     /**
- * Returns the next unused group id
- */
+     * Returns the next unused group id
+     */
     public static int getNextGroupId() {
         int max = -1;
 
@@ -46,33 +45,33 @@ public class GroupDAO extends DAO {
         } catch (SQLException ex) {
             Logger.getLogger(GroupDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("[jakers] "+max);
-        return max+1;
+        System.out.println("[jakers] " + max);
+        return max + 1;
     }
-    
+
     public static List<Integer> getGroupMembersIds(int group_id) {
-        List<Integer> members= new ArrayList<Integer>();
+        List<Integer> members = new ArrayList<Integer>();
         try {
             String query = "SELECT u.user_id FROM test_group dg " + "INNER JOIN user u "
                     + "ON dg.user_id=u.user_id " + "WHERE group_id ='" + group_id
                     + "'";
-            
+
             ResultSet rs = queryDB(query);
-            
+
             while (rs.next()) {
-                    members.add(rs.getInt("u.user_id"));
+                members.add(rs.getInt("u.user_id"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(GroupDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return members;
-        
+
     }
-    
+
     public static int getIngroupId(int user_id, int group_id) {
         int ingroup_id = 0;
-        String query = "SELECT * FROM test_group WHERE user_id ='"+user_id+"' AND"
-                + " group_id='"+group_id+"' LIMIT 1";
+        String query = "SELECT * FROM test_group WHERE user_id ='" + user_id + "' AND"
+                + " group_id='" + group_id + "' LIMIT 1";
         ResultSet rs = queryDB(query);
         try {
             while (rs.next()) {
@@ -81,10 +80,10 @@ public class GroupDAO extends DAO {
         } catch (SQLException ex) {
             Logger.getLogger(GroupDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-       return ingroup_id;
+        return ingroup_id;
     }
 
-   /**
+    /**
      * Insert a user into a group
      *
      * @param user_id the user to insert
@@ -105,22 +104,11 @@ public class GroupDAO extends DAO {
         insertDB(insert);
     }
 
-    
-
-    
     public static void insertGroupId(int group_id, int group_number) {
-
-       String insert = "INSERT INTO group_ids VALUES('" + group_id
-
-                     + "','" +group_number+"')";
-
-       
-
-       insertDB(insert);
-
-   }
-    
-    
+        String insert = "INSERT INTO group_ids VALUES('" + group_id
+                + "','" + group_number + "')";
+        insertDB(insert);
+    }
 
     /**
      * @param course_id the course you want
@@ -128,15 +116,17 @@ public class GroupDAO extends DAO {
      */
     public static List<Group> getAllGroupsAssignedAssignment(int assignment_id) {
         List<Group> groupList = new ArrayList<Group>();
- 
-        /* gets all the group ids assignment an assignment */
-        String query = "SELECT gi.group_id FROM group_ids gi INNER JOIN " +
-        "assign_to ato ON ato.group_id=gi.group_id "+
-        "WHERE ato.assignment_id='"+assignment_id+"'";
-        
+
+        /*
+         * gets all the group ids assignment an assignment
+         */
+        String query = "SELECT gi.group_id FROM group_ids gi INNER JOIN "
+                + "assign_to ato ON ato.group_id=gi.group_id "
+                + "WHERE ato.assignment_id='" + assignment_id + "'";
+
         ResultSet rs = queryDB(query);
         List<Integer> gids = new ArrayList<Integer>();
-        
+
         try {
             while (rs.next()) {
                 gids.add(rs.getInt("group_id"));
@@ -145,10 +135,12 @@ public class GroupDAO extends DAO {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        
-        /* load all members for each of the groups */
+
+        /*
+         * load all members for each of the groups
+         */
         for (Integer id : gids) {
-            query = "SELECT * FROM test_group tg INNER JOIN user u ON tg.user_id=u.user_id WHERE group_id='"+id+"'";
+            query = "SELECT * FROM test_group tg INNER JOIN user u ON tg.user_id=u.user_id WHERE group_id='" + id + "'";
             rs = queryDB(query);
             groupList.add(loadGroup(rs));
         }
@@ -182,9 +174,6 @@ public class GroupDAO extends DAO {
         return new ArrayList<Group>();
     }
 
-
-    
-    
     public static Group getGroupByUserAndAssignment(int user_id, int assignment_id) {
         Group group = null;
         String query = "SELECT a.group_id FROM assign_to a INNER JOIN test_group dg "
@@ -217,20 +206,12 @@ public class GroupDAO extends DAO {
     private static Group loadGroup(ResultSet rs) {
         Group group = new Group();
         try {
-//            rs.next();
-//            group.setGroup_id(rs.getInt("group_id"));
-//            group.add(new User(rs));
             while (rs.next()) {
                 /*
                  * only add if the user belongs to a different group
                  */
-//                if (group.getGroup_id() == rs.getInt("group_id")) {
-                    group.setGroup_id(rs.getInt("group_id"));
-                    group.add(new User(rs));
-//                } else {
-//                    rs.previous();
-//                    break;
-//                }
+                group.setGroup_id(rs.getInt("group_id"));
+                group.add(new User(rs));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -238,24 +219,19 @@ public class GroupDAO extends DAO {
         }
         return group;
     }
-    
+
     public static boolean isUserInGroup(int user_id, int assignment_id) {
-        
-        Group group = null;
+        boolean isInGroup = false;
         String query = "SELECT a.group_id FROM assign_to a INNER JOIN test_group dg "
                 + "ON a.group_id=dg.group_id WHERE user_id ='" + user_id
                 + "' AND assignment_id='" + assignment_id + "'";
 
         ResultSet rs = queryDB(query);
         try {
-            rs.next();
-            int group_id = rs.getInt(1);
-
-            group = getGroupMembers(group_id);
+            isInGroup = rs.next();
         } catch (SQLException ex) {
-            System.out.println("GROUPDAO: User not in a group for this assignment!");
-            return false;
+            System.out.println("GroupDAO: User not in a group for this assignment!");
         }
-        return true;
+        return isInGroup;
     }
 }

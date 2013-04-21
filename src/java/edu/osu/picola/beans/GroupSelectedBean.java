@@ -278,32 +278,12 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         this.selectedAssignment.setMP_start_date(new Timestamp(this.MP_start_date.getTime()));
         this.selectedAssignment.setMP_end_date(new Timestamp(this.MP_end_date.getTime()));
         
-        String answer = "";
-        
-        switch(this.multiple_choice_answer.charAt(0)){
-            case 'a':
-                answer = this.option_a;
-                break;
-            case 'b':
-                answer = this.option_b;
-                break;
-            case 'c':
-                answer = this.option_c;
-                break;
-            case 'd':
-                answer = this.option_d;
-                break;
-            case 'e':
-                answer = this.option_e;
-                break;
-        }
-        
         init.setOption_a(this.option_a);
         init.setOption_b(this.option_b);
         init.setOption_c(this.option_c);
         init.setOption_d(this.option_d);
         init.setOption_e(this.option_e);
-        init.setMultiple_choice_answer(answer);
+        init.setMultiple_choice_answer(this.multiple_choice_answer);
         init.setAnswer_to_question_explanation(this.answer_to_question_explanation);
         init.setQuestion(this.initquestion);
         

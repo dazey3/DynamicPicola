@@ -277,27 +277,8 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
         /* insert assignment */
         Assignment assignment = new Assignment(assignment_descr, is, ie, bs,
                 be, ms, me, user_id, course_id, assignment_number,assignment_name);
-        String answer = "";
         
-        switch(this.multiple_choice_answer.charAt(0)){
-            case 'a':
-                answer = this.option_a;
-                break;
-            case 'b':
-                answer = this.option_b;
-                break;
-            case 'c':
-                answer = this.option_c;
-                break;
-            case 'd':
-                answer = this.option_d;
-                break;
-            case 'e':
-                answer = this.option_e;
-                break;
-        }
-        
-        Question init = new Question(this.initquestion, this.answer_to_question_explanation, answer,
+        Question init = new Question(this.initquestion, this.answer_to_question_explanation, this.multiple_choice_answer,
 			Arrays.asList(new String[]{this.option_a, this.option_b, this.option_c, this.option_d, this.option_e}));
         Question mp = new Question(this.mpQuestion, this.mpQuestionDesc, true, false);
         Question bp = new Question(this.bpQuestion, this.bpQuestionDesc, false, true);
