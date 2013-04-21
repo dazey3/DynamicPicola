@@ -285,9 +285,16 @@ public class CreateAssignmentBean implements Serializable, ActionListener{
         
         AssignmentDAO.insertAssignment(assignment);
         QuestionDAO.insertQuestion(init);
+        init.setQuestion_id(QuestionDAO.getQuestionByQuestion(init.getQuestion()));
         QuestionDAO.insertQuestion(bp);
+        bp.setQuestion_id(QuestionDAO.getQuestionByQuestion(bp.getQuestion()));
         QuestionDAO.insertQuestion(mp);
+        mp.setQuestion_id(QuestionDAO.getQuestionByQuestion(mp.getQuestion()));
+        
         assignment = AssignmentDAO.getAssignmentByDateAndIds(user_id, course_id,assignment.getAssignment_number());
+
+        QuestionDAO.insertQuestionToAssignment(assignment.getAssignment_id(), user_id);
+        
         
         /* assign assignment to each student in the course */
         List<User> roster = UserDAO.getCourseRoster(course_id);
