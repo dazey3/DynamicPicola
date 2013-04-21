@@ -103,8 +103,6 @@
                                                     <p:inputTextarea rows="5" value="#{groupSelectedBean.instructorPost}" cols="30" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                     <p:commandButton update=":tabABCD:centerGroupForm" type="submit" value="Post" actionListener="#{groupSelectedBean.instructorSubmitPost()}"/>
                                                 </h:panelGrid>
-
-
                                             </h:form>
                                             <h:form id="updateAssignmentForm" rendered="#{groupSelectedBean.assignmentShow}">
                                                 <p:messages id="successMessage" showDetail="true" autoUpdate="true" closable="true" />
@@ -153,7 +151,7 @@
 
                                                     <p:tabView>
                                                         <p:tab id="initialQuestionTab" title="Intial Question">
-                                                            <h:panelGrid columns="2">
+                                                            <h:panelGrid columns="1">
                                                                 <h:panelGrid columns="2">
                                                                     <h:panelGrid columns="1">
                                                                         <h:outputText style="font-weight:bold;" value="Question: "/>
@@ -330,18 +328,12 @@
 
                                     <h:panelGroup>
                                         <h:panelGrid columns="1">
-                                            <h:panelGrid columns="1">
-                                                <h:outputText value="Assignment Number: "/>
-                                                <p:inputText value="#{createAssignmentBean.assignment_number}"/>
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="1">
-                                                <h:outputText value="Description: "/>
-                                                <p:inputTextarea value="#{createAssignmentBean.assignment_descr}" rows="3" cols="40" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
-                                            </h:panelGrid>
+                                            <h:outputText value="Description: "/>
+                                            <p:inputTextarea value="#{createAssignmentBean.assignment_descr}" rows="3" cols="40" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                         </h:panelGrid>
                                         <p:tabView>
                                             <p:tab id="initialQuestionTab" title="Intial Question">
-                                                <h:panelGrid columns="2">
+                                                <h:panelGrid columns="1">
                                                     <h:panelGrid columns="2">
                                                         <h:panelGrid columns="1">
                                                             <h:outputText style="font-weight:bold;" value="Question: "/>

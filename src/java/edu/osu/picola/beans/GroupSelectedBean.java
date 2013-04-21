@@ -235,13 +235,6 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         this.assignmentSelection = assignmentSelection;
     }
 */       
-    public void showAssignment(){
-        
-    }
-    
-    public void showGroup(){
-       
-    }
     
     public void changeFlag(Post post){
         System.out.println("Current Post Flag: " + post.getPost_isflaged());
@@ -284,7 +277,6 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         this.selectedAssignment.setBP_end_date(new Timestamp(this.BP_end_date.getTime()));
         this.selectedAssignment.setMP_start_date(new Timestamp(this.MP_start_date.getTime()));
         this.selectedAssignment.setMP_end_date(new Timestamp(this.MP_end_date.getTime()));
-        
         
         String answer = "";
         
@@ -339,7 +331,8 @@ public class GroupSelectedBean implements Serializable, ActionListener{
         System.out.println();
         this.selectedAssignment = ((MenuTab)event.getData()).getAssignment();
         
-        
+        this.assignment_id = this.selectedAssignment.getAssignment_id();
+        this.assignment_name = this.selectedAssignment.getAssignment_name();
         this.assignment_descr = this.selectedAssignment.getAssignment_descr();
         this.indivdual_start_date = this.selectedAssignment.getIndividual_start_date();
         this.indivdual_end_date = this.selectedAssignment.getIndividual_end_date();

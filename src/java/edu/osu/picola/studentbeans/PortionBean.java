@@ -4,11 +4,14 @@
  */
 package edu.osu.picola.studentbeans;
 
+import edu.osu.picola.beans.AssignmentMenuBean;
 import edu.osu.picola.beans.LoginBean;
 import edu.osu.picola.dao.AssignmentDAO;
 import edu.osu.picola.dao.GroupDAO;
 import edu.osu.picola.dao.MCResponseDAO;
 import edu.osu.picola.dao.PostDAO;
+import edu.osu.picola.dao.QuestionDAO;
+import edu.osu.picola.dataobjects.Assignment;
 import edu.osu.picola.dataobjects.Group;
 import edu.osu.picola.dataobjects.MCResponse;
 import edu.osu.picola.dataobjects.Post;
@@ -16,24 +19,21 @@ import edu.osu.picola.dataobjects.Question;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.component.commandlink.CommandLink;
-
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
  * @author Karl
  */
-
-
 public class PortionBean implements Serializable, ActionListener {
     private Question currentQuestion;
     private String question;
@@ -48,7 +48,98 @@ public class PortionBean implements Serializable, ActionListener {
     private Post selectedPost;
     private String studentPost;
     private boolean summaryBit;
+    private Assignment selectedAssignment;
+    private String assignment_name;
+    private String assignment_descr;
+    private Date indivdual_start_date;
+    private Date indivdual_end_date;
+    private Date BP_start_date;
+    private Date BP_end_date;
+    private Date MP_start_date;
+    private Date MP_end_date;
+    private boolean showAssignment;
+    private boolean showQuestion;
 
+    public boolean isShowAssignment() {
+        return showAssignment;
+    }
+
+    public void setShowAssignment(boolean showAssignment) {
+        this.showAssignment = showAssignment;
+    }
+
+    public boolean isShowQuestion() {
+        return showQuestion;
+    }
+
+    public void setShowQuestion(boolean showQuestion) {
+        this.showQuestion = showQuestion;
+    }
+
+    public String getAssignment_name() {
+        return assignment_name;
+    }
+
+    public void setAssignment_name(String assignment_name) {
+        this.assignment_name = assignment_name;
+    }
+    
+    public String getAssignment_descr() {
+        return assignment_descr;
+    }
+
+    public void setAssignment_descr(String assignment_descr) {
+        this.assignment_descr = assignment_descr;
+    }
+
+    public Date getIndivdual_start_date() {
+        return indivdual_start_date;
+    }
+
+    public void setIndivdual_start_date(Date indivdual_start_date) {
+        this.indivdual_start_date = indivdual_start_date;
+    }
+
+    public Date getIndivdual_end_date() {
+        return indivdual_end_date;
+    }
+
+    public void setIndivdual_end_date(Date indivdual_end_date) {
+        this.indivdual_end_date = indivdual_end_date;
+    }
+
+    public Date getBP_start_date() {
+        return BP_start_date;
+    }
+
+    public void setBP_start_date(Date BP_start_date) {
+        this.BP_start_date = BP_start_date;
+    }
+
+    public Date getBP_end_date() {
+        return BP_end_date;
+    }
+
+    public void setBP_end_date(Date BP_end_date) {
+        this.BP_end_date = BP_end_date;
+    }
+
+    public Date getMP_start_date() {
+        return MP_start_date;
+    }
+
+    public void setMP_start_date(Date MP_start_date) {
+        this.MP_start_date = MP_start_date;
+    }
+
+    public Date getMP_end_date() {
+        return MP_end_date;
+    }
+
+    public void setMP_end_date(Date MP_end_date) {
+        this.MP_end_date = MP_end_date;
+    }
+    
     public boolean isSummaryBit() {
         return summaryBit;
     }
@@ -156,9 +247,26 @@ public class PortionBean implements Serializable, ActionListener {
         this.option_e = option_e;
     }
     
-    public void tabChangeListener(AjaxBehaviorEvent evt){
+    public void onTabChange(TabChangeEvent event) {
+        System.out.println("ON TAB CHANGE EVENT");
+        
+        System.out.println("AssignmentID: " + ((AssignmentMenuBean.MenuTab)event.getData()).getAssignment().getAssignment_id());
+        System.out.println();
+        this.selectedAssignment = ((AssignmentMenuBean.MenuTab)event.getData()).getAssignment();
+        
+        this.assignment_name = this.selectedAssignment.getAssignment_name();
+        this.assignment_descr = this.selectedAssignment.getAssignment_descr();
+        this.indivdual_start_date = this.selectedAssignment.getIndividual_start_date();
+        this.indivdual_end_date = this.selectedAssignment.getIndividual_end_date();
+        this.BP_start_date = this.selectedAssignment.getBP_start_date();
+        this.BP_end_date = this.selectedAssignment.getBP_end_date();
+        this.MP_start_date = this.selectedAssignment.getMP_start_date();
+        this.MP_end_date = this.selectedAssignment.getMP_end_date();
+    
+        showAssignment = true;
+        showQuestion = false;
         clearSelection();
-   }
+    }
     
     private void clearSelection(){
         System.out.println("CLEARING GROUP SELECTION!");
@@ -191,7 +299,8 @@ public class PortionBean implements Serializable, ActionListener {
                 this.question = currentQuestion.getQuestion();
                 System.out.println(">>> Current Question: " + this.option_a);
                 System.out.println("GROUPSELECTEDBEAN: processAction occurred!!!!");
-                
+                this.showAssignment = false;
+                this.showQuestion = true;
         
     }
     
