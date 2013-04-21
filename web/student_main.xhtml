@@ -50,6 +50,20 @@
                                 <p:layout style="height: 400px;">
                                     <p:layoutUnit position="center">
                                         Welcome to Picola Student View! Select a tab to continue. 
+                                        
+                                        <h:form id ="homeid">
+                                            
+                                            <h:panelGroup id="hometabbing">
+                                                <h:panelGrid columns ="1">
+                                                    
+                                                    <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value ="Course: "/>
+                                                    <h:outputText style="font-weight:bold; font-size:20px;" value ="#{studentAssignmentMenuBean.selectedCourse.course_title}"/>
+                                                    
+                                                    
+                                                </h:panelGrid>
+                                            </h:panelGroup>
+                                            
+                                        </h:form>
                                     </p:layoutUnit>
                                 </p:layout>
                             </p:tab>
@@ -73,9 +87,35 @@
                                     <p:layoutUnit position="center">
                                         <h:panelGroup id="test">
                                             <h:form id ="assignmentForm" rendered ="#{portionBean.showAssignment}">
+                                                <h:panelGrid columns="1">
+                                                    <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value="Assignment:"/>
+                                                    <h:outputText style="font-weight:bold; font-size: 20px;" value="#{portionBean.assignment_name}"/>
+                                                    
+                                                    <h:outputText value =" "/>
+                                                    <hr/>
+                                                    <h:outputText style ="color: darkgrey; font-weight: bold; font-size: 20px;" value="Description:"/>
+                                                    <h:outputText value =" "/>
+                                                    <h:outputText style="font-size: 16px;" value="#{portionBean.assignment_descr}"/>
+                                                    <h:outputText value =" "/>
+                                                    <hr/>
+                                                    <h:outputText style="font-weight:bold; color: darkgrey; font-size: 20px;" value ="Due dates:"/>
+                                                   
+                                                </h:panelGrid>
+                                                
                                                 <h:panelGrid columns="2">
-                                                    <h:outputText value="If this value changes then we are changing Assignments"/>
-                                                    <h:outputText value="Assignment #{portionBean.assignment_name}"/>
+                                                    
+                                                    
+                                                    
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Individual Portion:  "/>
+                                                    <h:outputText value = " Opens on #{portionBean.indivdual_start_date}, must submit by #{portionBean.indivdual_end_date}"/> 
+                                                    
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Background Portion:  "/>
+                                                    <h:outputText value = " Opens on #{portionBean.BP_start_date}, must submit by #{portionBean.BP_end_date}"/> 
+                                                    
+                                                    <h:outputText style = "font-weight: bold; padding-right: 10px;" value= "Main Portion:  "/>
+                                                    <h:outputText value = " Opens on #{portionBean.MP_start_date}, must submit by #{portionBean.MP_end_date}"/> 
+                                                    
+                                                    
                                                 </h:panelGrid>
 
 
