@@ -271,10 +271,10 @@ public class UserDAO extends DAO {
     public static List<Integer> getStudentsThatDidNotAnswer(int assignment_id, int course_id){ 
         
         String query = "SELECT * FROM assignment_viewed av INNER JOIN enrolled e "
-                + "ON av.user_id=e.user_id "
-                + "LEFT JOIN question_response qr ON e.user_id=qr.user_id "
-                +"WHERE e.course_id='"+course_id+"' AND qr.multiple_Choice_response IS NULL AND "
-                + "av.assignment_id='" +assignment_id+"'";
+                     + "ON av.user_id=e.user_id "
+                     + "LEFT JOIN question_response qr ON av.assignment_id=qr.assignment_id "
+                     + "WHERE e.course_id='"+course_id+"' AND qr.multiple_Choice_response IS NULL AND "
+                     + "av.assignment_id='"+assignment_id+"'";
         
         List<Integer> badStudents = new ArrayList<Integer>();
         
