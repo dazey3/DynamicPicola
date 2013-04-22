@@ -50,5 +50,11 @@ h1{
 
 .ui-toolbar {
     padding: 0px;
-   margin:0px;
+    margin:0px;
 }
+
+.ui-button-text {
+    font-size: 90% !important;
+    font-weight: bold !important;
+}
+  
