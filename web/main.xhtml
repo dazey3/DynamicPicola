@@ -9,8 +9,6 @@
 
     <h:head>
         <title>PICOLA</title>
-        <link rel="stylesheet" type="text/css" href="bootstrapformhelpers/css/bootstrap-formhelpers.css"/>
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css"/>
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
         <link rel="stylesheet" type="text/css" href="MainStyles.css"/>
         <link rel="stylesheet" type="text/css" href="HeaderStyles.css"/>
@@ -41,7 +39,7 @@
                             <p:selectOneMenu value="#{assignmentMenuBean.selectedCourse}">
                                 <f:selectItems value="#{assignmentMenuBean.courses}"/>
 
-                                <p:ajax update=":tabABCD:test , :tabABCD:accordionOfAssignments , :tabABCD:rosterForm , :tabABCD:postAssignmentForm" event="change"  listener="#{assignmentMenuBean.updateModel()}"  />
+                                <p:ajax update=":tabABCD:test , :tabABCD:assignmentStats , :tabABCD:accordionOfAssignments , :tabABCD:rosterForm , :tabABCD:postAssignmentForm" event="change"  listener="#{assignmentMenuBean.updateModel()}"  />
 
                             </p:selectOneMenu>
                         </p:panelGrid>
@@ -404,16 +402,27 @@
                                     <p:messages id="createMessage" showDetail="true" autoUpdate="true" closable="true" />
                                 </h:form>
                             </p:tab>
-                            <p:tab id="tab4" title="Assignment Stats">
-                                <h:panelGrid columns="2">
-                                    <p:selectOneListbox id="basic" value="#{assignmentGraphBean.selectedAssignment}">
-                                        <f:selectItems value="#{assignmentMenuBean.menus}" var="menuItem" itemLabel="#{menuItem.title}" /> 
-                                        <p:ajax update=":tabABCD:barChart" listener="#{assignmentGraphBean.updateGraph}"/>
-                                    </p:selectOneListbox>
-                                    <p:barChart id="barChart" value="#{chartBean.categoryModel}" legendPosition="ne" title="Interactive Bar Chart" style="height:300px">  
-                                        <p:ajax event="itemSelect" listener="#{chartBean.itemSelect}" update="growl" />  
-                                    </p:barChart>
-                                </h:panelGrid>
+                            <p:tab id="tab4" title="Assignment Stats" >
+                                <h:form id="assignmentStats">
+                                    <p:messages id="chartMessage" showDetail="true" autoUpdate="true" closable="true" />
+                                    <h:panelGrid columns="2">
+                                        <h:panelGrid columns="1">
+                                            <ui:repeat value="#{assignmentMenuBean.assignments}" var="assignment">
+                                                <p:commandLink update=":tabABCD:assignmentStats" value="#{assignment}" actionListener="#{assignmentMenuBean.updateGraph}"/>
+                                                <br/>
+                                            </ui:repeat>
+                                        </h:panelGrid>
+                                        <p:dataTable value="#{assignmentMenuBean.multipleChoiceData}" var="mcd">
+                                            <p:column headerText="MC Option">  
+                                                <h:outputText value="#{mcd.mcoption}" />
+                                            </p:column>
+                                            <p:column headerText="# of Students">  
+                                                <h:outputText value="#{mcd.value}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                        
+                                    </h:panelGrid>
+                                </h:form>
                             </p:tab>
                         </p:tabView>
                         <p:confirmDialog widgetVar="deleteDialog" id="deleteDlg" message="Delete Post?">
@@ -424,7 +433,6 @@
                 </div>
             </ui:fragment>
         </h:panelGroup>
-        <script src="bootstrap/js/bootstrap-collapse.js"></script>
-        <script src="bootstrap/js/bootstrap.js"></script>
+
     </h:body>
 </html>

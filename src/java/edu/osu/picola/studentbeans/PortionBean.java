@@ -282,6 +282,7 @@ public class PortionBean implements Serializable, ActionListener {
         this.currentGroup = null;
         this.currentGroupDiscussion = null;
         this.studentPost = "";
+        this.summaryBit=false;
     }
 
     @Override

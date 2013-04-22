@@ -163,4 +163,8 @@ public class Assignment implements Serializable {
     public void setAssignment_name(String assignment_name) {
         this.assignment_name = assignment_name;
     }
+    
+    public String toString(){
+        return(this.assignment_name);
+    }
 }
