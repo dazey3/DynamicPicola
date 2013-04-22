@@ -60,13 +60,13 @@
     <managed-bean>
         <managed-bean-name>studentAssignmentMenuBean</managed-bean-name>
         <managed-bean-class>edu.osu.picola.studentbeans.StudentAssignmentMenuBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
         
     <managed-bean>
         <managed-bean-name>portionBean</managed-bean-name>
         <managed-bean-class>edu.osu.picola.studentbeans.PortionBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <managed-bean>
@@ -98,7 +98,7 @@
     <managed-bean>
         <managed-bean-name>groupSelectedBean</managed-bean-name>
         <managed-bean-class>edu.osu.picola.beans.GroupSelectedBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <managed-bean>
