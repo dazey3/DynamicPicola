@@ -4,6 +4,7 @@
  */
 package edu.osu.picola.etl;
 
+import edu.osu.picola.businesslogic.MCStatisticHandler;
 import edu.osu.picola.dao.AssignmentDAO;
 import edu.osu.picola.dao.GroupDAO;
 import edu.osu.picola.dataobjects.Assignment;
@@ -17,15 +18,15 @@ import java.util.List;
  */
 public class TEST {
     public static void main(String args[]) {
-//        List<Group> group = GroupDAO.getAllGroupsAssignedAssignment(1);
-//        System.out.println("SIZE = "+ group.size() );
-//        
-//        for (Group g : group) {
-//            for (User u : g) {
-//                System.out.println(u.getF_name() + " "+ u.getL_name());
-//            }
-//            System.out.println("==============");
-//        }
-
+        List<Integer> data = MCStatisticHandler.getMCStatsForAssignment(1);
+        
+        System.out.println("a = "+data.get(0));
+        System.out.println("b = "+data.get(1));
+        System.out.println("c = "+data.get(2));
+        System.out.println("d = "+data.get(3));
+        System.out.println("e = "+data.get(4));
+        System.out.println("no = "+data.get(5));
+        
+        
     }
 }
