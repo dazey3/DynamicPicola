@@ -20,15 +20,19 @@ import java.util.Map;
  * @author jakers
  */
 public class GroupHandler {
+
     private static int groupCount = 4;
-    
-    
-     public static String autoGrouper(int course_id, int assignment_id) {
-        
-         /* get question_id */
+
+    public static String autoGrouper(int course_id, int assignment_id) {
+
+        /*
+         * get question_id
+         */
         int question_id = QuestionDAO.getInitQuestion(assignment_id).getQuestion_id();
-         
-        /* prepare due date check data */
+
+        /*
+         * prepare due date check data
+         */
         Assignment a = AssignmentDAO.getAssignment(assignment_id);
         Timestamp due = a.getIndividual_end_date();
         Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -41,26 +45,38 @@ public class GroupHandler {
         /* if the due data has passed */
         if (now.after(due)) {
 
-            /* form right and wrong list of people who responded */
+            /*
+             * form right and wrong list of people who responded
+             */
             List<List<MCResponse>> rightAndWrong =
                     GroupHandler.getRightAndWrongList(course_id, assignment_id,
                     question_id);
             List<MCResponse> right = rightAndWrong.get(0);
             List<MCResponse> wrong = rightAndWrong.get(1);
 
-            /* check for anyone who didn't answer */
-            List<Integer> noAnswer = UserDAO.getStudentsThatDidNotAnswer(assignment_id, course_id);
             
-            /* add anyone who has not answered to the wrong list */
+            
+            /*
+             * check for anyone who didn't answer
+             */
+            List<Integer> noAnswer = UserDAO.getStudentsThatDidNotAnswer(assignment_id, course_id);
+            for (Integer i : noAnswer) {
+                System.out.println("[jakers] GROUPING IDs == " +i);
+            }
+            /*
+             * add anyone who has not answered to the wrong list
+             */
             for (Integer user_id : noAnswer) {
                 MCResponse noAnswerResponse = new MCResponse(user_id, assignment_id, question_id, 'z');
                 wrong.add(noAnswerResponse);
             }
-    
-            /* checks to see the size that a group should be */
-            int courseSize= UserDAO.getCourseRoster(course_id).size();
+
+            /*
+             * checks to see the size that a group should be
+             */
+            int courseSize = UserDAO.getCourseRoster(course_id).size();
             if (courseSize <= 9) {
-                groupCount = 3 ;
+                groupCount = 3;
             } else if (courseSize <= 16) {
                 groupCount = 4;
             } else if (courseSize <= 25) {
@@ -70,21 +86,22 @@ public class GroupHandler {
             } else if (courseSize <= 49) {
                 groupCount = 7;
             } else {
-                groupCount = (int)Math.sqrt((double)courseSize);
+                groupCount = (int) Math.sqrt((double) courseSize);
             }
-            
-            if(courseSize == 0){
+
+            if (courseSize == 0) {
                 return "Course Roster Empty";
             }
-            /* group everyone */
+            /*
+             * group everyone
+             */
             GroupHandler.autoGroup(right, wrong, course_id, course_id, assignment_id);
             return "Successfully grouped students";
-        }
-        else{
+        } else {
             return "Attempting to do grouping before group date";
         }
     }
-    
+
     /**
      * @param course_id the course to be grouped on
      * @param assignment_id the assignment to be grouped on
@@ -159,14 +176,15 @@ public class GroupHandler {
 /* distribute the correct students */
         System.out.println("GroupHandler: Distribute Correct Students");
         int tmpGid;
-        for (int i = 0; i < right.size();i++) {
+        for (int i = 0; i < right.size(); i++) {
             int c_user = right.get(i).getUser_id();
-            tmpGid = group_id + (group_id+i) % groupCount;
+            tmpGid = group_id + (group_id + i) % groupCount;
             int inGroup = inGroupIds.get(tmpGid);
             GroupDAO.insertUserIntoGroup(c_user, tmpGid, course_id, inGroup);
             System.out.println("GroupDAO.insertuserIntoGroup("+ c_user + ", " + tmpGid  + ", " + course_id + ", " + inGroup + ") ");
             inGroupIds.put(tmpGid, inGroupIds.get(tmpGid) + 1);
         }
+        
         System.out.println();
 /* distribute the wrong students */
         System.out.println("GroupHandler: Distribute Wrong Students");
@@ -180,17 +198,13 @@ public class GroupHandler {
         }
         System.out.println();
     }
-    
+
     public static List getGroupMCResponseMapping(int group_id, int assignment_id, int question_id) {
         Map<Integer, String> mapping = new HashMap<Integer, String>();
         List<Integer> ids = GroupDAO.getGroupMembersIds(group_id);
-//        System.out.println("IDS = "+ ids);
-//        int i = 0;
         for (Integer user_id : ids) {
             int ingroup = GroupDAO.getIngroupId(user_id, group_id);
-            System.out.println(user_id + " => "+ ingroup);
-//            System.out.println(i+1);
-//            i++;
+            System.out.println(user_id + " => " + ingroup);
             MCResponse mc = MCResponseDAO.getOneStudentMCResponse(user_id, assignment_id, question_id);
             mapping.put(ingroup, String.valueOf(mc.getMcresponse()));
         }

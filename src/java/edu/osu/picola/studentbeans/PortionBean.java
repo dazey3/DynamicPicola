@@ -35,7 +35,7 @@ public class PortionBean implements Serializable, ActionListener {
 
     private Question currentQuestion;
     private String question;
-    private String selectedAnswer;
+    private String selectedAnswer = "a";
     private String option_a;
     private String option_b;
     private String option_c;
@@ -272,7 +272,7 @@ public class PortionBean implements Serializable, ActionListener {
     private void clearSelection() {
         System.out.println("CLEARING GROUP SELECTION!");
         this.currentQuestion = null;
-        this.selectedAnswer = null;
+        this.selectedAnswer = "a";
         this.question = null;
         this.option_a = null;
         this.option_b = null;
