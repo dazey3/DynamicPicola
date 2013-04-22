@@ -44,7 +44,6 @@ public class GroupHandler {
         
         /* if the due data has passed */
         if (now.after(due)) {
-
             /*
              * form right and wrong list of people who responded
              */

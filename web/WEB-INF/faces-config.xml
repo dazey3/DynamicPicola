@@ -8,6 +8,12 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
 
     <managed-bean>
+        <managed-bean-name>assignmentGraphBean</managed-bean-name>
+        <managed-bean-class>edu.osu.picola.beans.AssignmentGraphBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
         <managed-bean-name>assignmentBean</managed-bean-name>
         <managed-bean-class>edu.osu.picola.beans.AssignmentBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>

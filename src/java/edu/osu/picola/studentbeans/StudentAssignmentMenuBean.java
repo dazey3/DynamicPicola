@@ -120,7 +120,7 @@ public class StudentAssignmentMenuBean implements Serializable {
                    System.out.println("Question: " + q);
                }
                tab.setAssignment(assignments.get(assignment_count));
-               tab.setTitle("Assignment "+ assignments.get(assignment_count).getAssignment_id());
+               tab.setTitle("Assignment "+ assignments.get(assignment_count).getAssignment_number());
                tab.setList(questions);
                menus.add(tab);
        }

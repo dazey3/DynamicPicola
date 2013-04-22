@@ -40,9 +40,9 @@
                             <h:outputText style="font-weight:bold; font-size: 20px;" value="SELECT CLASS:" />
                             <p:selectOneMenu value="#{assignmentMenuBean.selectedCourse}">
                                 <f:selectItems value="#{assignmentMenuBean.courses}"/>
-                                <f:ajax listener="#{groupSelectedBean.clearSelection()}"/>
+
                                 <p:ajax update=":tabABCD:test , :tabABCD:accordionOfAssignments , :tabABCD:rosterForm , :tabABCD:postAssignmentForm" event="change"  listener="#{assignmentMenuBean.updateModel()}"  />
-                                
+
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </h:form>
@@ -109,7 +109,7 @@
 
                                             </h:form>
                                             <h:form id="updateAssignmentForm" rendered="#{groupSelectedBean.assignmentShow}">
-                                                
+
                                                 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Update Assignment #{groupSelectedBean.selectedAssignment.assignment_number}:"/>
                                                 <h:panelGrid columns="1">
                                                     <h:outputLabel style="font-weight:bold;" value="Assignment Name:"/>
@@ -152,7 +152,6 @@
                                                             <p:inputTextarea value="#{groupSelectedBean.assignment_descr}" rows="3" cols="80" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false"/>
                                                         </h:panelGrid>
                                                     </h:panelGrid>
-
                                                     <p:tabView>
                                                         <p:tab id="initialQuestionTab" title="Intial Question">
                                                             <h:panelGrid columns="1">
@@ -236,12 +235,6 @@
                                         </h:panelGroup>
                                     </p:layoutUnit>
                                 </p:layout>
-
-
-
-
-
-
                             </p:tab>
                             <p:tab id="tab2" title="Roster">
                                 <h:form id="rosterForm">
@@ -254,7 +247,6 @@
 
                                 <p:dialog id="dialog" header="Student Profile" widgetVar="dlg" showEffect="clip" hideEffect="clip" modal="true">
                                     <h:form id ="profileDialog">
-
                                         <h:panelGrid columns="1">
                                             <h:panelGrid columns="2">
                                                 <h:graphicImage value="#{viewProfileBean.picLink}" />
@@ -286,7 +278,6 @@
                                                 </p:dataTable>
                                             </h:panelGrid>
                                         </h:panelGrid>
-
                                     </h:form> 
                                 </p:dialog>
                             </p:tab>
@@ -307,7 +298,6 @@
                                                 <p:calendar value="#{createAssignmentBean.indivdual_end_date}" pattern="MM/dd/yyyy HH:mm" id="popupCal2" />
                                             </h:panelGrid>
                                         </h:panelGroup>
-
                                         <h:panelGroup>
                                             <h:outputLabel style="font-weight:bold;" value="Assignment BP:"/>
                                             <h:panelGrid columns="2" cellpadding="30" >
@@ -413,6 +403,17 @@
                                     <p:commandButton type="clear" value="Reset" actionListener="#{createAssignmentBean.clearForm}"/>
                                     <p:messages id="createMessage" showDetail="true" autoUpdate="true" closable="true" />
                                 </h:form>
+                            </p:tab>
+                            <p:tab id="tab4" title="Assignment Stats">
+                                <h:panelGrid columns="2">
+                                    <p:selectOneListbox id="basic" value="#{assignmentGraphBean.selectedAssignment}">
+                                        <f:selectItems value="#{assignmentMenuBean.menus}" var="menuItem" itemLabel="#{menuItem.title}" /> 
+                                        <p:ajax update=":tabABCD:barChart" listener="#{assignmentGraphBean.updateGraph}"/>
+                                    </p:selectOneListbox>
+                                    <p:barChart id="barChart" value="#{chartBean.categoryModel}" legendPosition="ne" title="Interactive Bar Chart" style="height:300px">  
+                                        <p:ajax event="itemSelect" listener="#{chartBean.itemSelect}" update="growl" />  
+                                    </p:barChart>
+                                </h:panelGrid>
                             </p:tab>
                         </p:tabView>
                         <p:confirmDialog widgetVar="deleteDialog" id="deleteDlg" message="Delete Post?">
